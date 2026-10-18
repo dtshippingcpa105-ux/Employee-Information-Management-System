@@ -1,0 +1,2606 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#003C73">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="CPA EIMS">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>চট্টগ্রাম বন্দর কর্তৃপক্ষ – পরিবহন বিভাগ EIMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://firestore.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh}
+body{
+  font-family:'Hind Siliguri',system-ui,sans-serif;
+  background:
+    radial-gradient(circle at 15% 0%,rgba(62,143,208,.55),transparent 45%),
+    radial-gradient(circle at 90% 15%,rgba(211,169,78,.18),transparent 40%),
+    linear-gradient(135deg,#002A50 0%,#003C73 30%,#005AA9 65%,#1B7FBF 100%);
+  background-attachment:fixed;
+  color:#1a2e42;
+}
+h1,h2,h3,h4{font-family:'Tiro Bangla','Noto Serif Bengali',serif;font-weight:400}
+button:disabled{opacity:.5;cursor:not-allowed}
+input:disabled,select:disabled{background:#f3f5f7;color:#8b96a3}
+input[type=number]::-webkit-inner-spin-button{opacity:1}
+
+/* ===== GLASS CARD ===== */
+.card{
+  background:rgba(255,255,255,.58);
+  backdrop-filter:blur(14px) saturate(160%);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:14px;
+  box-shadow:0 8px 32px rgba(0,42,79,.18);
+}
+/* ===== INPUTS ===== */
+.inp{
+  width:100%;padding:9px 10px;
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:8px;font-size:13px;
+  background:rgba(255,255,255,.72);
+  backdrop-filter:blur(6px);color:#1a2e42;
+  font-family:'Hind Siliguri',sans-serif;
+}
+.inp:focus{outline:2px solid #3E8FD0;border-color:#3E8FD0}
+.lbl{display:block;font-size:12px;font-weight:700;margin:10px 0 4px;color:#264257}
+/* ===== BUTTONS ===== */
+.btn{
+  border:none;border-radius:8px;
+  padding:9px 15px;font-weight:700;
+  cursor:pointer;font-size:13px;
+  font-family:'Hind Siliguri',sans-serif;
+  transition:opacity .15s;
+}
+.btn:hover:not(:disabled){opacity:.88}
+.btn-navy{background:linear-gradient(180deg,#3E8FD0,#003C73);color:#fff;box-shadow:0 4px 12px rgba(0,60,115,.28)}
+.btn-gold{background:#D3A94E;color:#172a3a}
+.btn-white{background:#fff;color:#003C73;border:1px solid #c0cfe0}
+.btn-red{background:#fdecea;color:#c0392b}
+.btn-sm{padding:5px 11px;font-size:12px;border-radius:6px}
+/* ===== HEADER ===== */
+header{
+  position:relative;overflow:hidden;
+  background:rgba(0,42,79,.42);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  border-bottom:1px solid rgba(255,255,255,.22);
+  color:#fff;padding:16px 22px 0;
+  box-shadow:0 8px 28px rgba(0,20,40,.28);
+}
+nav{display:flex;gap:4px;margin-top:4px;overflow-x:auto;position:relative;z-index:1}
+.nav-item{
+  padding:9px 16px;border-radius:8px 8px 0 0;
+  cursor:pointer;font-size:13px;font-weight:700;
+  white-space:nowrap;transition:background .15s;
+}
+.nav-item.active{background:rgba(255,255,255,.86);color:#003C73}
+.nav-item:not(.active){background:rgba(255,255,255,.08);color:#D8E6F3}
+/* ===== TABLES ===== */
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{text-align:left;padding:8px 7px;color:#294860;background:#f2f6fa;font-weight:700}
+.tbl td{padding:7px;border-bottom:1px solid #eef2f6}
+.tbl tr:hover td{background:rgba(62,143,208,.06)}
+/* ===== MODALS ===== */
+.overlay{
+  position:fixed;inset:0;
+  background:#00172c99;
+  display:flex;align-items:center;
+  justify-content:center;padding:14px;z-index:50;
+}
+.modal{
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:14px;
+  box-shadow:0 12px 40px rgba(0,42,79,.3);
+  overflow:auto;
+  max-height:90vh;
+}
+/* ===== BADGE ===== */
+.badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:800}
+/* ===== STAT CARD ===== */
+.stat-card{padding:14px;border-radius:14px;background:rgba(255,255,255,.58);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.55)}
+/* ===== SECTION LABEL ===== */
+.sec-label{font-size:12px;font-weight:700;color:#003C73;background:rgba(0,60,115,.08);border-left:3px solid #003C73;padding:5px 10px;border-radius:0 6px 6px 0;margin:14px 0 8px}
+/* ===== PREV WORKPLACE ROW ===== */
+.prev-row{background:rgba(255,255,255,.5);border:1px solid rgba(0,60,115,.15);border-radius:10px;padding:10px;margin-bottom:8px}
+/* ===== PRINT STYLES ===== */
+@media print{
+  body{background:#fff!important;color:#000}
+  header,nav,.no-print,footer{display:none!important}
+  .print-area{display:block!important}
+  .overlay{position:static!important;background:none!important}
+  .modal{box-shadow:none;border:none;max-height:none}
+  .print-letterhead{text-align:center;margin-bottom:20px}
+  .print-letterhead img{width:80px;height:80px}
+  table{border-collapse:collapse;width:100%}
+  table th,table td{border:1px solid #000;padding:6px 8px;font-size:12px}
+  .print-footer{margin-top:24px;font-size:11px;text-align:center;border-top:1px solid #999;padding-top:8px;font-style:italic}
+}
+@media screen{.print-only{display:none}}
+/* ===== TOAST ===== */
+#toast{
+  position:fixed;right:16px;bottom:16px;
+  background:#002A50;color:#fff;
+  padding:10px 18px;border-radius:9px;
+  font-size:13px;z-index:999;
+  opacity:0;transition:opacity .3s;
+  pointer-events:none;
+}
+#toast.show{opacity:1}
+/* ===== FOOTER ===== */
+.eims-foot{
+  font-size:11.5px;color:#eaf1f8;
+  padding:18px 24px 26px;
+  border-top:1px solid rgba(255,255,255,.3);
+}
+.eims-foot .note{text-align:center;max-width:820px;margin:0 auto 10px;line-height:1.6;opacity:.9}
+.eims-foot .credit{text-align:right;font-size:11px;color:#cfe0ee;line-height:1.6;max-width:1280px;margin:0 auto}
+/* ===== GRID ===== */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px 10px}
+@media(max-width:600px){.grid2,.grid3{grid-template-columns:1fr}}
+
+/* ===== MODERN DASHBOARD v7 STYLE ===== */
+.dash-wrap{max-width:1500px;margin:0 auto}
+.dash-hero{
+  position:relative;overflow:hidden;border-radius:22px;padding:24px 26px;margin-bottom:16px;
+  background:linear-gradient(135deg,rgba(0,42,79,.96),rgba(0,91,169,.92));
+  color:#fff;box-shadow:0 14px 38px rgba(0,42,79,.22);
+}
+.dash-hero:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-70px;top:-110px;background:rgba(211,169,78,.18);box-shadow:-80px 120px 0 rgba(255,255,255,.04)}
+.dash-kicker{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#e8c873;font-weight:800}
+.dash-title{font-size:25px;margin:5px 0 3px;color:#fff}
+.dash-sub{font-size:12px;color:#dceafb;opacity:.9}
+.dash-date{position:absolute;right:24px;bottom:20px;font-size:11px;color:#d8e7f6}
+.dash-kpis{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.dash-kpi{
+  position:relative;padding:16px;border-radius:17px;background:rgba(255,255,255,.82);
+  border:1px solid rgba(255,255,255,.9);box-shadow:0 8px 26px rgba(0,42,79,.10);
+  backdrop-filter:blur(14px);overflow:hidden
+}
+.dash-kpi .ico{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:19px;margin-bottom:10px}
+.dash-kpi .label{font-size:12px;color:#60758a;font-weight:700}
+.dash-kpi .value{font-size:27px;font-weight:900;color:#003c73;line-height:1.15;margin-top:3px}
+.dash-kpi .hint{font-size:10px;color:#8191a0;margin-top:4px}
+.dash-kpi:after{content:"";position:absolute;right:-25px;bottom:-30px;width:85px;height:85px;border-radius:50%;background:rgba(25,118,210,.05)}
+.dash-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-bottom:16px}
+.dash-panel{background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.8);border-radius:18px;padding:18px;box-shadow:0 8px 26px rgba(0,42,79,.09);backdrop-filter:blur(14px)}
+.dash-panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}
+.dash-panel-head h3{font-size:16px;color:#003c73;margin:0}
+.dash-panel-head span{font-size:10px;color:#71869a}
+.dash-bars{display:grid;gap:13px}
+.dbar{display:grid;grid-template-columns:105px 1fr 42px;align-items:center;gap:9px;font-size:11px}
+.dbar-label{font-weight:700;color:#41596d}
+.dbar-track{height:10px;border-radius:99px;background:#edf2f6;overflow:hidden}
+.dbar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#1976d2,#3e8fd0)}
+.dbar:nth-child(2) .dbar-fill{background:linear-gradient(90deg,#2e7d32,#66bb6a)}
+.dbar:nth-child(3) .dbar-fill{background:linear-gradient(90deg,#c18d24,#d3a94e)}
+.dbar:nth-child(4) .dbar-fill{background:linear-gradient(90deg,#c0392b,#ef6c62)}
+.dbar-val{text-align:right;font-weight:900;color:#003c73}
+.donut-wrap{display:flex;align-items:center;justify-content:center;gap:24px;min-height:185px}
+.donut{width:150px;height:150px;border-radius:50%;background:conic-gradient(#1976d2 0 var(--min),#d3a94e var(--min) 100%);display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,42,79,.12)}
+.donut:before{content:"";width:98px;height:98px;border-radius:50%;background:#fff}
+.donut-center{position:absolute;text-align:center;z-index:2}
+.donut-center b{display:block;font-size:25px;color:#003c73}
+.donut-center small{font-size:10px;color:#71869a}
+.legend{display:grid;gap:12px;font-size:12px}
+.legend-row{display:flex;align-items:center;gap:8px;font-weight:700;color:#4a6072}
+.legend-dot{width:10px;height:10px;border-radius:50%}
+.alert-list{display:grid;gap:9px}
+.alert-item{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:12px;background:#f8fafc;border:1px solid #edf1f5}
+.alert-icon{width:31px;height:31px;border-radius:10px;display:grid;place-items:center;font-size:15px;flex:none}
+.alert-item b{display:block;color:#294860;font-size:12px}
+.alert-item span{font-size:10px;color:#748798}
+.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.quick-btn{border:1px solid #dce6ef;background:#fff;border-radius:13px;padding:13px 10px;cursor:pointer;text-align:left;font-family:'Hind Siliguri',sans-serif;transition:.18s;box-shadow:0 3px 10px rgba(0,42,79,.05)}
+.quick-btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,42,79,.11);border-color:#b9cee0}
+.quick-btn strong{display:block;color:#003c73;font-size:12px;margin-top:7px}
+.quick-btn span{font-size:10px;color:#71869a}
+@media(max-width:1050px){.dash-kpis{grid-template-columns:repeat(3,1fr)}.dash-grid{grid-template-columns:1fr}}
+@media(max-width:650px){.dash-kpis{grid-template-columns:repeat(2,1fr)}.quick-grid{grid-template-columns:repeat(2,1fr)}.dash-hero{padding:20px}.dash-title{font-size:20px}.dash-date{position:static;margin-top:10px}.donut-wrap{flex-direction:column}}
+
+.prl-detail{font-size:10px;color:#7b1c2a;line-height:1.5;margin-top:3px}
+.house-view-section{margin-top:12px}
+@media (max-width:768px){*{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}}
+.u-grid{display:grid;grid-template-columns:1fr 1.2fr 1fr 1fr 1.3fr auto;gap:8px;margin-top:10px}
+@media (max-width:900px){.u-grid{grid-template-columns:1fr 1fr}}
+</style>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div id="login-screen" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px 16px 60px;overflow:hidden">
+
+  <!-- crane silhouette bottom decoration -->
+  <div style="position:absolute;bottom:0;left:0;right:0;height:90px;pointer-events:none;z-index:0">
+    <svg viewBox="0 0 1280 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice" style="width:100%;height:100%;opacity:.18">
+      <rect x="50" y="20" width="6" height="70" fill="#fff"/>
+      <rect x="20" y="18" width="80" height="4" fill="#fff"/>
+      <rect x="20" y="14" width="4" height="60" fill="#fff"/>
+      <rect x="100" y="22" width="3" height="45" fill="#fff"/>
+      <rect x="120" y="22" width="3" height="68" fill="#fff"/>
+      <rect x="150" y="30" width="6" height="60" fill="#fff"/>
+      <rect x="130" y="28" width="60" height="4" fill="#fff"/>
+      <rect x="186" y="32" width="3" height="40" fill="#fff"/>
+      <rect x="500" y="15" width="6" height="75" fill="#fff"/>
+      <rect x="470" y="13" width="80" height="4" fill="#fff"/>
+      <rect x="470" y="9" width="4" height="60" fill="#fff"/>
+      <rect x="550" y="17" width="3" height="50" fill="#fff"/>
+      <rect x="570" y="17" width="3" height="73" fill="#fff"/>
+      <rect x="600" y="25" width="6" height="65" fill="#fff"/>
+      <rect x="575" y="23" width="65" height="4" fill="#fff"/>
+      <rect x="636" y="27" width="3" height="45" fill="#fff"/>
+      <rect x="950" y="18" width="6" height="72" fill="#fff"/>
+      <rect x="920" y="16" width="80" height="4" fill="#fff"/>
+      <rect x="920" y="12" width="4" height="60" fill="#fff"/>
+      <rect x="1000" y="20" width="3" height="50" fill="#fff"/>
+      <rect x="1020" y="20" width="3" height="70" fill="#fff"/>
+      <rect x="1050" y="28" width="6" height="62" fill="#fff"/>
+      <rect x="1023" y="26" width="65" height="4" fill="#fff"/>
+      <rect x="1086" y="30" width="3" height="40" fill="#fff"/>
+      <rect x="0" y="88" width="1280" height="2" fill="#fff"/>
+    </svg>
+  </div>
+
+  <!-- LOGO -->
+  <img id="logo-login" src="" alt="CPA"
+    style="width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.7);box-shadow:0 6px 24px rgba(0,20,40,.4);background:rgba(255,255,255,.92);margin-bottom:14px;position:relative;z-index:1">
+
+  <!-- TITLE BLOCK -->
+  <div style="text-align:center;color:#fff;position:relative;z-index:1;margin-bottom:26px">
+    <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#D3A94E;font-weight:700;margin-bottom:6px">Chittagong Port Authority</div>
+    <h1 style="font-family:'Tiro Bangla',serif;font-size:clamp(18px,3vw,26px);font-weight:400;color:#fff;text-shadow:0 2px 8px rgba(0,20,40,.5);line-height:1.35;margin-bottom:10px">
+      Traffic Department Employee Information Management System (EIMS)
+    </h1>
+    <p style="font-size:13px;color:rgba(220,235,255,.88);margin:0;text-shadow:0 1px 4px rgba(0,20,40,.4)">
+      চট্টগ্রাম বন্দর কর্তৃপক্ষের পরিবহন বিভাগ অধীনে কর্মরত কর্মচারীদের ডিজিটাল তথ্য ব্যবস্থাপনা সিস্টেম
+    </p>
+  </div>
+
+  <!-- FORM CARD -->
+  <div style="position:relative;z-index:1;background:rgba(255,255,255,.12);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);border:1px solid rgba(255,255,255,.28);border-radius:14px;box-shadow:0 12px 40px rgba(0,20,40,.35);width:min(380px,100%);padding:28px 30px">
+    <div style="margin-bottom:16px">
+      <label style="display:block;font-size:11px;font-weight:700;letter-spacing:1.5px;color:#cee0f5;margin-bottom:6px;text-transform:uppercase">EMAIL ADDRESS</label>
+      <input id="l-user" type="email" placeholder="your-email@example.com"
+        style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.18);color:#fff;font-size:14px;font-family:'Hind Siliguri',sans-serif;outline:none"
+        onfocus="this.style.borderColor='rgba(255,255,255,.7)'" onblur="this.style.borderColor='rgba(255,255,255,.35)'">
+    </div>
+    <div style="margin-bottom:6px">
+      <label style="display:block;font-size:11px;font-weight:700;letter-spacing:1.5px;color:#cee0f5;margin-bottom:6px;text-transform:uppercase">PASSWORD</label>
+      <input id="l-pass" type="password" placeholder=""
+        style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.18);color:#fff;font-size:14px;font-family:'Hind Siliguri',sans-serif;outline:none"
+        onfocus="this.style.borderColor='rgba(255,255,255,.7)'" onblur="this.style.borderColor='rgba(255,255,255,.35)'"
+        onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div id="l-err" style="font-size:12px;color:#ffb3b3;margin:6px 0;min-height:16px"></div>
+    <button onclick="doLogin()"
+      style="width:100%;padding:12px;border:none;border-radius:8px;background:linear-gradient(180deg,#3E8FD0,#1565c0);color:#fff;font-size:15px;font-weight:700;font-family:'Hind Siliguri',sans-serif;cursor:pointer;margin-top:6px;letter-spacing:.5px;box-shadow:0 4px 14px rgba(0,60,150,.4)">
+      Login
+    </button>
+    <div style="font-size:10px;color:rgba(200,225,255,.8);text-align:center;margin-top:14px;line-height:1.6">
+      
+    </div>
+  </div>
+
+  <!-- BOTTOM FOOTER -->
+  <div style="position:absolute;bottom:0;left:0;right:0;z-index:1;padding:10px 20px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:6px">
+    <div style="font-size:11px;color:rgba(210,230,255,.8);max-width:600px;line-height:1.6">
+      এই ওয়েবসাইটটি স্ক্যানিং সকল তথ্য দপ্তর কর্তৃক নিয়মিত হালনাগাদ করা হয়। তথ্যের যথার্থতা, নির্ভুলতা ও নির্ভরযোগ্যতা নিশ্চিত করতে সংশ্লিষ্ট দপ্তর সর্বদা সচেষ্ট।
+    </div>
+    <div style="font-size:11px;color:rgba(210,230,255,.85);text-align:right;line-height:1.6">
+      <div>পরিকল্পনা এবং বাস্তবায়ন: খোন্দকার নিজাম উদ্দিন, প্রধান সহকারী</div>
+      <div>কারিগরি সহায়তায়ঃ Claude.ai</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAIN APP ===== -->
+<div id="app" style="display:none;font-family:'Hind Siliguri',system-ui,sans-serif;min-height:100vh">
+  <header>
+    <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-bottom:14px">
+      <div style="display:flex;gap:14px;align-items:center">
+        <img id="logo-app" src="" alt="CPA"
+          style="width:46px;height:46px;border-radius:50%;border:2px solid rgba(255,255,255,.55);background:rgba(255,255,255,.9);object-fit:cover;box-shadow:0 4px 14px rgba(0,20,40,.35)">
+        <div>
+          <div style="font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:#D3A94E;font-weight:600;margin-bottom:2px">Chittagong Port Authority</div>
+          <strong style="font-size:15px;font-weight:700">Traffic Department Employee Information Management System (EIMS)</strong>
+          <div style="font-size:11px;opacity:.85;margin-top:2px">লগইন: <span id="role-label"></span></div>
+        </div>
+      </div>
+      <button class="btn btn-white" onclick="doLogout()">Logout</button>
+    </div>
+    <nav id="main-nav"></nav>
+  </header>
+
+  <div id="save-err" style="display:none;background:#fdecea;color:#c0392b;padding:8px 18px;font-size:12px"></div>
+
+  <div style="padding:16px" id="page-content"></div>
+
+  <footer class="eims-foot">
+    <div class="note">এই সিস্টেমে প্রকাশিত সকল তথ্য সংশ্লিষ্ট দপ্তর কর্তৃক নিয়মিত হালনাগাদ করা হয়। তথ্যের যথার্থতা, নির্ভুলতা ও নির্ভরযোগ্যতা নিশ্চিত করতে সংশ্লিষ্ট দপ্তর সর্বদা সচেষ্ট।</div>
+    <div class="credit">
+      <div>পরিকল্পনা এবং বাস্তবায়ন: খোন্দকার নিজাম উদ্দিন, প্রধান সহকারী</div>
+      <div>কারিগরি সহায়তায়ঃ Claude AI</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div id="toast"></div>
+
+<!-- ===== MODALS (rendered dynamically) ===== -->
+<div id="modal-container"></div>
+
+<script>
+// ==========================================
+// FIREBASE CONFIG - replace these values with your Firebase Web App config
+// ==========================================
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDkrK0y5QMQKnMVUrM1mX2s5I2xlx-sils",
+  authDomain: "cpa-staff-management-system.firebaseapp.com",
+  projectId: "cpa-staff-management-system",
+  storageBucket: "cpa-staff-management-system.firebasestorage.app",
+  messagingSenderId: "881265813159",
+  appId: "1:881265813159:web:754993b6e2392078d55d82"
+};
+let firebaseReady=false, db=null, auth=null;
+try {
+  if(window.firebase && FIREBASE_CONFIG.apiKey !== "YOUR_API_KEY") {
+    firebase.initializeApp(FIREBASE_CONFIG);
+    auth=firebase.auth(); db=firebase.firestore(); firebaseReady=true;
+  }
+} catch(e) { console.warn("Firebase initialization failed", e); }
+
+// ==========================================
+// CONSTANTS & CONFIG
+// ==========================================
+const NAVY='#003C73',NAVY_DEEP='#002A50',GOLD='#D3A94E';
+const BLUE='#1976d2',GREEN='#2e7d32',RED='#c0392b';
+const CPA_LOGO='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALAAAACsCAMAAADsfdaMAAABgFBMVEX+/v4BldrP6PYCi9St2O9PteUqiMaNyelzxOoHecMzqeGV0+9Jmc654vQlot4GdL02k81nqtbc8Pl4s9qlzOZaotJjveccoN2Fut7D3e5CruLh7vaKvuAAbrsAbsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADIup6gAAAAYHRSTlP/////////////////////////////////////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACXGcesAAAP90lEQVR42u1daWOqOhAlGwkJILKqte///8yXFQKEzaK9H5oP97YV5TCZnDkzWYyiv/bX/tpf+2t/7a/9tX+kQUyra5oWsW5FkTbXW43hPwm1rlIFMm2qG62xaVTCbxT6ornhfwjs/SaxFle6aEqI9dM09F+wNZVQ0ud9+8IvXBUovuLfRltUC2aDQsxfqZv49zDjFBXjThaM8C5n+mcO8hxw/XI2Qn6/xnH1C75RzW8LESdMMKQQ57l8EXKg/k4QALzNvEdtUPpZM8MmCd0RaFBMoqTA/oWZfzJKEPMvvcUx/RzcNLk644qWDaYDGoMCy4n5Syt/hgC754CAi96d4/j2Mbi90wJA+GC6Tv0EAbGWteCxsXaG5ENmRL4D94PgE5CvA9xIIGVS8XC/E0ByAB7RGDBDnGEI89zgBhy4VyMcx/WbeSxJvZEGJm7YAmajh3MJIlFyziRGyxgR6eSniIHn4uKNjAHj2HYnVTayfR1BZu/JQP9g3qBTj4WB8wPApnTjddnZTHbpXY4qhxQaFcsBos6l+2u5YgwIcvVPZk2tnQDA+aCI8XvM63deTpQ7qj8QBh0aPa56f5aNaEc3LxlQhAcd7Q1GvlnzQlYaANnQvQ4ozKGveIw7Y+POwP4nfBvkzt5pfLYn95/YItDqPufKZ0vT//mO4aofynMa5R6kd5Db5dQ4AlEzUAPPlWUhkrbK5VgqJRmXI1kG7xjXtRTFd99sWWk9yTWGKBzw35PmPLz15endB0gOkJA1JWhP7cf9nV7TGCV+k9q9qgfcAHtOjiPaeXcp4vPYAVsxRpWVlEtIyK1hYWjQfNXXWAFECAG/IY0fpdOMA2pqsUMQUhuTznHkqxlSsudNjBL6dwZQ7wnwVihUYLFJ2BeUekFNICLAA/LWUI71jOcFnzLc7C2E9jvWOyIjFm18WQPbg5bP5CQeVh9TSn8Sxjlg73s/R5wWozAsJJ9qSusFzC60DvPFimhoPyzTRvA+7sdkUaSOglwIyz0aq6VxwaEmMTdw4LXSdZ17iPsPETu8A4Gqm9gAQeMLAsdbckk97QGdOjVDI4KX+gR/UJ8L3fCGThq+BNdANgmA0XLuBq3lxh/48dVjxpyPTA3Tl+EayDrQZ1Ya6XjkvAJf7q/yLzIQiZKPme06EyZuR3135suX+G46LPOYzeZYF/hifDNaXEZ8oX2MYyh0PgHjH5nXQa4GHWKZTRhNZy11VD8YX7I+Jh894zYM05+a17aLFlRSj2TcMZswwJv0BcAJ9VIHgjRuHdqu3wic0xLNCDJ+9LKUIoM4ro4ThBFPpo7TAgzy0ur4BJzW0Hc1hBFtF0G0hb4OU8XTupF2X5VaQNNr9+REvLJ9+6LyoVzY0BG+HHVg+9Qm/S1dqMMXBM5tSe+upc0/TOC7FocA9xUO4YaDRl6fjlcijl1EKkZ5wKFSVhWP018VReXT0+/z8TrEGA3pqa52wgNsPLqWS+kqNOz6LXgtYtYnT/BhygYHnGJMKjSX+Tp8h/9OvcLWYArrhWivDKKmj1qRjc3+Lrz+yMvyobaIk52ATXzUGREgzJXPk/fhlUHv6oiY5EMtK90XPqqij5KYyszNVKKKBLyzfVOTNgq/fAT3ZaXuKh1zZC6eqVz5enkrXimFFAsRp5JtvajZU6u4pp4EJnbs4m/w5oZiv4prtcvXHhPra3S1AYJHV37Age3Auw6pHnAluOu2iat0kOnYjdg0Ae9vTu9ADtq+7LVtYu3yLkdmJrrX3x/A65yCodyj02arEPvUFMEdtXD9K0KfAAwSxWKdTpOgYMLmpltBrjYzhNibeqsS8JmmmQLq4Kx+1RiK5/p0bGyIhaBhwuWdIS4Y8CDITVkM61rNep6heqWUZoUycbFzLc2nDCxNrDNpYOfRmM5P4/vmkGs7O+K05oEXW4D8gCdrE/dVsUgP+VVmo4VX8lWhkqqqrf4sxgjhnHegh/+OJ1AmZnxU/oZrPpE+A9rYwBqyAQghxoKqJyDuCc7CruYNKI9GVbG1STFTqqbjeT+DaCVhkQ8gCAfoJKLoq3e2SLriE2ZEjidkY4uDbKYp7VlcbMpAGbfA78s+0VS6I0Y816u0bRWSnRXuHoATgPrqyjJPaG+ho0msXkUgMb2acOnEzP+zOMErtKLAhLd4W8eb8ShjRj5cPci0mU/ICxVTeLOfcLcdH7CcNT4RbXp6SckKulRpMy8AgYkc+lyHjdoLGlPdhO3N+XHAwZlTbvnG+hdVay8QWSM27cKGtqEgmhi8KIem6wai3L7CMrcSUD/XSsM8/OweYEPFhbohEVCsBjvtwgNtZ3DgiOCwwyGX7dYHpn7ILFoBrHiCSaxRhx0DpAucqsu1pf/00JcRcypmwI93KACYtm2Lp6gWAoEFjJzHktaqxagKM3GA7+hY98yHKfYaJTPArZ5vxiO/XwxBDnDSs5D6o7q6LlbG3Mi9xkJt7sVT/HwCuFAdkLT+qERttA4YJHd3ratPL4y66mou63grsnIU5lwrt2LHBDDVM+PYZ5ERO1IaAmwm3YFUKtho4ii8/CO9GX5gRI8MtQpqooTRZnwmaOzDmFIKfR7k4+cpQoCN4Qo9Qmm0rH+K2ndOVdS4T6X7PNxNhyFaZgk67SOIgoBRYZc3Df4Zpok529XzXAMeAVxmumkKztSS0fHbpYcHAceqJjiPEGFWU5/dW+E2B8yPAGZTosZjhwgDBkl4eIWVBO/vwfpk44AbzwEjr407tkhQkgcBm3iQqSyhfSgivqWLgGXfZZxjIZTsCKWf64hngDvRNzoZOYrzcBQQIoq4+x7VBYeg/BnihqsARmko9q4ingFedSEYomEDGGPovRqMHHgnYKkN1wDnBwD7d8+9rKNexhb8o1uaKjstrGYlpy80eVtGbWNUBT68pzE+SpN8X2dsB2A2yecCq6QW2vi11Uun71sArLt7BbAcHLgjijuXLfz2csoIcLsOuPOD2m8Blj5MHoS0jDGR73CJqCyhtnD6e4DbB+d551R4EHBAw/0WYJ+wc9qX0NYAc6LrcMnvAIYzwMG8Of7SuPXEKdM6pfoHAOvpmXCOZFSyW86iEhT6K4DRaJZAT8Req8WkuV8BWKqJ0N8BHO+pqjqVPKwCkFoQ/g7gkcPqlKEIZhza7nSoJmfhUHecOdCxl5JqVBFdzum06OyLs2rbU5DX2FLSUWIeRkWyxXonWYobLYaRcJuAFrJmO4Ok04JML3AK0QRcz0EDAFbzQBEmCfMgbpsVjleKl+amdjZyPuqydZU4t/FWMWOWRrkxlxEwrpgs8VoEab+o43Cej+cG2y5lzKc53PoHuJaDBpPpifzZTPOjgzlgwI08+e4QL03LBOLJNG/eXGCYTwG3W+9op4C/vKWCBjGCa/O2k0mvT1t4zMK8XR5zYbobM/Hm7bOj9eLZIyZ0lqcuz3sVdNMnNio/c17d6hSx4hH+CoOV1ShrPrGRBbNQ3MiOdEkyh/C1vGQiFFGmq2e6ZYtBEo507MATBtYN05UljQH+wJe9ZQm2JBrQErlkAG0rNVsGXlgCFnDvmQBCfF/I2qTDbCNh9ifAlzo14C71ZRdVbczbhu7WbWj3bY8ID8iAxoQ7dc8qV9D5O5LbLuqaSsxtE7PtiDGVmLuEEtrX6VsOM/fi+e23Zm3zPY8Y2um1tTYwtLDtftm2F95KO3YADlFEhDY2JgV74LqtMjH6OeDQpim6ubO1CLHeZK1owIdfsDBfXC26KywPpgqtrfneYolyAy/fJO6gQ9Q7tg4H90+MZjuCPLxBa3RTpwU38+zZzBE0sc8UKBgFVmkiHBxHbnSpXjTwghcPCzARD4fKLF+ur5OlDBCtqLRdHqxZLLgbgVo3zpc7CbPwxMdiJSMq227FgaPnzs3vaROanKq+lfeefj4IzN2S/QA57d0cOn47GQbe5oqJFxpHEm9QzTW7z0O4jbqC5oOWfwdgAL6dq47cbfdGmcjbnaaLScNE43/0HRb+dp/KR4ZGB27mbfdinEDa2iMV4uJ8wHmP95FFHuJjOwD7DXUkj0QbERqZNYvF6YiH4wMAy/hQ7cWXr0OfY3eo0YdZO0Yys1w6SuOvU/HSfrwRloOI90EpOeh9dtur4PawGZ7Zs4Wq5MxDeYZDOziTBDecKZc2x7vqq8/DlTd0IjOI6eW8E7GGY1EIo0wqKBzkqWNunOnjejAnFPLSVC/Sk9x3EJTywymlglhmwC/tzk97XFjvbG6pwC6E1Ke4Q/8phD86mZS2EOpjY+CLJzb0W0MZ7HCEyXCWCU7Sn4493JcpMSa0RLkccG51FHrR6b7cSCWC661fAnvm+ZEnw3QQYlCNEZYNuzHil0+ucsd/ENHmpFOnJmX9ErH7T85206fMQfP4EIqx+ix+METs8R/SI3D+gDoPYp66fg3y19WcMqeVXykdjXC/TJ/+KDZhgxgrPVHCqOOwJcNqKPrC0YrQwjW7PkspH2Ss6LwV+j88AAobryhppi2SMRn0vDWpdRFfjzAQTfvrO31uHIdqSTjsx1v64wOrhljPhfx8oLYsyJ+Grbz7DwrFTRz3s9yMqK1zgFO9gJVZCXuGVoEusmWAtTLbUZRMRuOkTrcPZIXqUFq/MxiTikoSZmSWO5i3nxOSILI0kxUq/9SLxDgfJ2r4qg/0DVoaYnXcb3obvSjhzqYS4Gkn8fUymAKs848sjxgar8aPYH1NzYnJT3tick1vV33a8+zwMvqQYbht2cT5nqeJlGYQVTraqQNNCWgJnVtTHeqcFoU9kbp6Bk5RpoSp2QIsFY+vXS5nykDqhp5e5oi1zJaSnhFWHh3ELWmhqlPJhJZ59ZWzjzl0Ek0o4EokS54gKoESBz6kFK0uUqjsRWT90ZJanDTR2a3plbve888Rl2rTHb+Jyx1oCWHAlFWolJOYSELDeCrcTmy1s4ImA4IQsMcVqKUuhLR0bQYRKqRQhuFM6J2xjOdqoQo36/7S6D0t9ROtDBPMPYxSw3RqvaTA0C2kh5mglDFXP4JAckNEC+YV1+SVTfK+o5NxPNqKMJxiCVVdTf6qt4eq5cVtq6tqVLA+7RHqpxwCbwOeZDb03UTvbLek8c5n7UccQIQJFVJwK6IuGrQj4f1ccycfBE8GqfSGe/TmJrWsyzaGmwvVzxI/RIiQTm1AVVVvqA48GZ4qky5CyLjDPnGQtn+Eth9rtSqg6shRgkimTx5WOeUknlEf7jP6TAseUo7dSb2ZmgzXO/egVDiYhRfR0M/B1ZCreW/2qyAVuWb2FE+MOQmp+Lioow83WqAGjyPDiHfNYOQOuvfSUwrNe/QLTZm5WVIsC5Vk+CxQSqNfa/dqpnTXaFyq5pR+Rb/bdC6RVhvfawKpBPvbX27hw1FfbFI01exLRGToo0bYV/gr+rcarKsmjd3XyRSF/WaZOL0+/82vlemB33V+pP6B/zTQv/bX/tpf+2t/7V9s/wMb155WuJ6gKQAAAABJRU5ErkJggg==';
+
+const OFFICE_LIST=[
+  'পরিচালক (পরিবহন) এর দপ্তর',
+  'ডিটিএম (অপা.) এর দপ্তর',
+  'টার্মিনাল ম্যানেজার এর দপ্তর'
+];
+
+const POST_OPTIONS={
+  Ministerial:['তত্ত্বাবধায়ক','প্রধান সহকারী','উচ্চমান সহকারী','নিম্নমান সহকারী','স্টেনো'],
+  Outdoor:['টিআই','এটিআই','উচ্চ বহিঃ সহকারী','নিম্নবহিঃ সহকারী']
+};
+
+const SEED_LOCS=[
+  {name:'শিপিং শাখা (পরিচালক পরিবহন)',office:'পরিচালক (পরিবহন) এর দপ্তর',branch:'শিপিং শাখা',san:0,work:0},
+  {name:'সাধারণ শাখা (পরিচালক পরিবহন)',office:'পরিচালক (পরিবহন) এর দপ্তর',branch:'সাধারণ শাখা',san:0,work:0},
+  {name:'সংস্থাপন শাখা (পরিচালক পরিবহন)',office:'পরিচালক (পরিবহন) এর দপ্তর',branch:'সংস্থাপন শাখা',san:0,work:0},
+  {name:'গুদামভাড়া শাখা (পরিচালক পরিবহন)',office:'পরিচালক (পরিবহন) এর দপ্তর',branch:'গুদামভাড়া শাখা',san:0,work:0},
+  {name:'দাবী আমদানি শাখা (পরিচালক পরিবহন)',office:'পরিচালক (পরিবহন) এর দপ্তর',branch:'দাবী আমদানি শাখা',san:0,work:0},
+  {name:'ডক শ্রম শাখা (পরিচালক পরিবহন)',office:'পরিচালক (পরিবহন) এর দপ্তর',branch:'ডক শ্রম শাখা',san:0,work:0},
+  {name:'আদালত শাখা (পরিচালক পরিবহন)',office:'পরিচালক (পরিবহন) এর দপ্তর',branch:'আদালত শাখা',san:0,work:0},
+  {name:'দাবী ফেরত শাখা (পরিচালক পরিবহন)',office:'পরিচালক (পরিবহন) এর দপ্তর',branch:'দাবী ফেরত শাখা',san:0,work:0},
+  {name:'গোপনীয় শাখা (পরিচালক পরিবহন)',office:'পরিচালক (পরিবহন) এর দপ্তর',branch:'গোপনীয় শাখা',san:0,work:0},
+  {name:'বিল শাখা (পরিচালক পরিবহন)',office:'পরিচালক (পরিবহন) এর দপ্তর',branch:'বিল শাখা',san:0,work:0},
+  {name:'পত্র বিলি শাখা (পরিচালক পরিবহন)',office:'পরিচালক (পরিবহন) এর দপ্তর',branch:'পত্র বিলি শাখা',san:0,work:0},
+  {name:'পরিসংখ্যান শাখা (পরিচালক পরিবহন)',office:'পরিচালক (পরিবহন) এর দপ্তর',branch:'পরিসংখ্যান শাখা',san:0,work:0},
+  {name:'অপারেশন শাখা (পরিচালক পরিবহন)',office:'পরিচালক (পরিবহন) এর দপ্তর',branch:'অপারেশন শাখা',san:0,work:0},
+  {name:'ভান্ডার শাখা/ব্যাগেজ শেড (পরিচালক পরিবহন)',office:'পরিচালক (পরিবহন) এর দপ্তর',branch:'ভান্ডার শাখা/ব্যাগেজ শেড',san:0,work:0},
+  {name:'শিপিং শাখা (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'শিপিং শাখা',san:0,work:0},
+  {name:'সাধারণ শাখা (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'সাধারণ শাখা',san:0,work:0},
+  {name:'সংস্থাপন শাখা (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'সংস্থাপন শাখা',san:0,work:0},
+  {name:'গুদাম ভাড়া শাখা (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'গুদাম ভাড়া শাখা',san:0,work:0},
+  {name:'ও.টি.আর শাখা (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'ও.টি.আর শাখা',san:0,work:0},
+  {name:'রপ্তানি শাখা (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'রপ্তানি শাখা',san:0,work:0},
+  {name:'ম্যানিফেস্ট শাখা (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'ম্যানিফেস্ট শাখা',san:0,work:0},
+  {name:'রেল অপারেশন শাখা (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'রেল অপারেশন শাখা',san:0,work:0},
+  {name:'এলপিওবি শেড (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'এলপিওবি শেড',san:0,work:0},
+  {name:'পরিসংখ্যান শাখা (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'পরিসংখ্যান শাখা',san:0,work:0},
+  {name:'বিল শাখা (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'বিল শাখা',san:0,work:0},
+  {name:'ক্যাশ এন্ড একাউন্টস শাখা (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'ক্যাশ এন্ড একাউন্টস শাখা',san:0,work:0},
+  {name:'আন্ডারচার্জ ও অডিট শাখা (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'আন্ডারচার্জ ও অডিট শাখা',san:0,work:0},
+  {name:'হ্যান্ডলিং শাখা (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'হ্যান্ডলিং শাখা',san:0,work:0},
+  {name:'স্টোর শাখা (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'স্টোর শাখা',san:0,work:0},
+  {name:'পত্রবিলি শাখা (ডিটিএম অপা.)',office:'ডিটিএম (অপা.) এর দপ্তর',branch:'পত্রবিলি শাখা',san:0,work:0},
+  {name:'মূল দপ্তর (টার্মিনাল ম্যানেজার)',office:'টার্মিনাল ম্যানেজার এর দপ্তর',branch:'মূল দপ্তর',san:0,work:0},
+  {name:'অপারেশন শাখা (টার্মিনাল ম্যানেজার)',office:'টার্মিনাল ম্যানেজার এর দপ্তর',branch:'অপারেশন শাখা',san:0,work:0},
+  {name:'ডেলিভারি শাখা (টার্মিনাল ম্যানেজার)',office:'টার্মিনাল ম্যানেজার এর দপ্তর',branch:'ডেলিভারি শাখা',san:0,work:0},
+];
+
+// ==========================================
+// STATE
+// ==========================================
+let state={
+  role:null,currentUser:null,userOffice:'',staff:[],suspended:[],locations:[],postOptions:null,
+  activityLog:[],
+  page:'dashboard',tab:'Ministerial',
+  q:'',statusFilter:'',locFilter:'',pageNum:1
+};
+
+// ==========================================
+// PERSISTENCE
+// ==========================================
+function localSave(){
+  try{localStorage.setItem('cpa-eims-v6',JSON.stringify({
+    staff:state.staff,suspended:state.suspended||[],locations:state.locations,
+    postOptions:state.postOptions,activityLog:state.activityLog||[]
+  }))}catch(e){}
+}
+async function cloudLoad(){
+  if(!firebaseReady || !auth || !auth.currentUser || !db) return false;
+  try{
+    const staffQuery=(state.role==='office_editor')?db.collection('staff').where('office','==',state.userOffice):db.collection('staff');
+    let locSnapEmpty=true,postExists=false;
+    const snap=await staffQuery.get();
+    state.staff=snap.docs.map(d=>({...d.data(),id:d.id}));
+    if(state.role==='admin'){
+      const [locSnap,suspSnap,postSnap,actSnap]=await Promise.all([
+        db.collection('locations').get(),db.collection('suspended').get(),
+        db.collection('settings').doc('posts').get(),db.collection('activityLogs').orderBy('timestamp','desc').limit(300).get()
+      ]);
+      locSnapEmpty=locSnap.empty;postExists=postSnap.exists;
+      state.locations=locSnap.empty?JSON.parse(JSON.stringify(SEED_LOCS)):locSnap.docs.map(d=>({...d.data(),name:d.data().name||d.id}));
+      state.suspended=suspSnap.docs.map(d=>({...d.data(),id:d.id}));
+      state.postOptions=postSnap.exists?postSnap.data().postOptions:null;
+      state.activityLog=actSnap.docs.map(d=>({id:d.id,...d.data(),timestamp:d.data().timestamp?.toDate?.()?.toISOString?.()||d.data().timestamp}));
+    } else {
+      state.locations=JSON.parse(JSON.stringify(SEED_LOCS)); state.suspended=[]; state.postOptions=null;
+      const actSnap=await db.collection('activityLogs').where('uid','==',auth.currentUser.uid).limit(300).get();
+      state.activityLog=actSnap.docs.map(d=>({id:d.id,...d.data()}));
+    }
+    // remember what is already in the cloud so save() writes only what changed
+    _cloudBase.staff={};state.staff.forEach(s=>{_cloudBase.staff[s.id]=_fp(s)});
+    if(state.role==='admin'){
+      _cloudBase.locations={};if(!locSnapEmpty)state.locations.forEach(l=>{_cloudBase.locations[l.name]=_fp(l)});
+      _cloudBase.suspended={};state.suspended.forEach(s=>{_cloudBase.suspended[s.id]=_fp(s)});
+      _cloudBase.posts=postExists?_fp({postOptions:state.postOptions}):'';
+    }
+    _cloudReady=true;
+    localSave(); return true;
+  }catch(e){ console.error(e); showSaveErr('Firebase থেকে তথ্য লোড করা যায়নি: '+e.message); return false; }
+}
+// ---- Cloud sync: only changed records are written, in chunks (Firestore batch limit = 500) ----
+const _cloudBase={staff:{},locations:{},suspended:{},posts:''};
+let _cloudReady=false;
+function _fp(o){
+  const skip={updatedAt:1,updatedBy:1};
+  const norm=v=>{
+    if(Array.isArray(v))return v.map(norm);
+    if(v&&typeof v==='object'){
+      if(typeof v.toDate==='function')return '__ts__';
+      const r={};Object.keys(v).sort().forEach(k=>{if(!skip[k])r[k]=norm(v[k])});return r;
+    }
+    return v;
+  };
+  return JSON.stringify(norm(o));
+}
+async function _commitOps(ops){
+  const CHUNK=400;
+  for(let i=0;i<ops.length;i+=CHUNK){
+    const part=ops.slice(i,i+CHUNK);
+    const b=db.batch();
+    part.forEach(o=>{
+      if(o.del)b.delete(o.ref);
+      else if(o.merge)b.set(o.ref,o.data,{merge:true});
+      else b.set(o.ref,o.data);
+    });
+    await b.commit();
+    part.forEach(o=>{if(o.del)delete o.store[o.key];else o.store[o.key]=o.fp});
+  }
+}
+async function save(){
+  localSave();
+  if(!firebaseReady || !auth || !auth.currentUser || !db) return;
+  if(!_cloudReady){showSaveErr('Cloud থেকে তথ্য লোড হয়নি, তাই পরিবর্তন শুধু এই ডিভাইসে আছে। পেজ রিফ্রেশ করে আবার চেষ্টা করুন।');return false}
+  try{
+    const ops=[];
+    const isAdmin=state.role==='admin';
+    const staffList=isAdmin?state.staff:state.staff.filter(s=>canEditStaff(s));
+    staffList.forEach(s=>{
+      const fp=_fp(s);
+      if(_cloudBase.staff[s.id]!==fp)ops.push({ref:db.collection('staff').doc(s.id),data:normalizeStaffForCloud(s),merge:!isAdmin,key:s.id,fp,store:_cloudBase.staff});
+    });
+    let postsOp=null;
+    if(isAdmin){
+      const staffIds=new Set(state.staff.map(s=>s.id));
+      Object.keys(_cloudBase.staff).forEach(id=>{if(!staffIds.has(id))ops.push({del:true,ref:db.collection('staff').doc(id),key:id,store:_cloudBase.staff})});
+      const locNames=new Set(state.locations.map(l=>l.name));
+      state.locations.forEach(l=>{
+        const fp=_fp(l);
+        if(_cloudBase.locations[l.name]!==fp)ops.push({ref:db.collection('locations').doc(locDocId(l.name)),data:l,key:l.name,fp,store:_cloudBase.locations});
+      });
+      Object.keys(_cloudBase.locations).forEach(n=>{if(!locNames.has(n))ops.push({del:true,ref:db.collection('locations').doc(locDocId(n)),key:n,store:_cloudBase.locations})});
+      const suspIds=new Set(state.suspended.map(s=>s.id));
+      state.suspended.forEach(s=>{
+        const fp=_fp(s);
+        if(_cloudBase.suspended[s.id]!==fp)ops.push({ref:db.collection('suspended').doc(s.id),data:s,key:s.id,fp,store:_cloudBase.suspended});
+      });
+      Object.keys(_cloudBase.suspended).forEach(id=>{if(!suspIds.has(id))ops.push({del:true,ref:db.collection('suspended').doc(id),key:id,store:_cloudBase.suspended})});
+      const postsData={postOptions:state.postOptions||POST_OPTIONS};
+      const pfp=_fp(postsData);
+      if(_cloudBase.posts!==pfp)postsOp={ref:db.collection('settings').doc('posts'),data:postsData,fp:pfp};
+    }
+    await _commitOps(ops);
+    if(postsOp){await postsOp.ref.set(postsOp.data);_cloudBase.posts=postsOp.fp}
+    // Persist activity entries individually because they need server timestamps.
+    const pending=(state.activityLog||[]).filter(a=>!a._cloud);
+    for(const a of pending){
+      const ref=db.collection('activityLogs').doc(a.id);
+      await ref.set({...a,uid:auth.currentUser.uid,timestamp:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+      a._cloud=true;
+    }
+    return true;
+  }catch(e){console.error(e);showSaveErr('Cloud সংরক্ষণে সমস্যা: '+e.message);return false}
+}
+function normalizeStaffForCloud(s){
+  const office=s.office||staffOffice(s)||'';
+  return {...s,office,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),updatedBy:auth?.currentUser?.uid||''};
+}
+async function load(){
+  if(await cloudLoad()) return;
+  try{
+    const raw=localStorage.getItem('cpa-eims-v6');
+    if(raw){const d=JSON.parse(raw);state.staff=d.staff||[];state.suspended=d.suspended||[];state.locations=d.locations||[];state.postOptions=d.postOptions||null;state.activityLog=d.activityLog||[];}
+    else{state.locations=JSON.parse(JSON.stringify(SEED_LOCS));state.activityLog=[];localSave()}
+  }catch(e){state.locations=JSON.parse(JSON.stringify(SEED_LOCS));state.activityLog=[]}
+}
+function showSaveErr(msg){const el=document.getElementById('save-err');el.textContent=msg;el.style.display=msg?'block':'none'}
+
+// ==========================================
+// UTILITIES
+// ==========================================
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2)}
+function fmt(d){if(!d)return '—';try{return new Date(d).toLocaleDateString('bn-BD')}catch(e){return d}}
+function fmtE(d){if(!d)return '—';try{return new Date(d).toLocaleDateString('en-GB')}catch(e){return d}}
+function isDue(join){
+  if(!join)return false;
+  const d=new Date(join),due=new Date(d);due.setFullYear(due.getFullYear()+2);return new Date()>=due;
+}
+function isNew(s){if(s.newp!=='yes'||!s.currentOrderDate)return false;return(new Date()-new Date(s.currentOrderDate))/864e5<=180}
+function statusOf(s){if(isDue(s.currentOrderDate))return 'due';if(isNew(s))return 'new';return 'ok'}
+function prlDaysLeft(s){
+  if(!s.prlDate)return null;
+  const prl=new Date(s.prlDate);
+  const notice=new Date(prl);notice.setMonth(notice.getMonth()-2);
+  const today=new Date();
+  if(today<notice)return null; // not yet in notice window
+  const diff=Math.ceil((prl-today)/864e5);
+  return diff>=0?diff:-1; // -1 = already passed
+}
+function calcDuration(startDate,endDate){
+  if(!startDate)return '—';
+  const s=new Date(startDate);
+  const e=endDate?new Date(endDate):new Date();
+  let y=e.getFullYear()-s.getFullYear();
+  let m=e.getMonth()-s.getMonth();
+  let d=e.getDate()-s.getDate();
+  if(d<0){m--;const pm=new Date(e.getFullYear(),e.getMonth(),0);d+=pm.getDate();}
+  if(m<0){y--;m+=12;}
+  const parts=[];
+  if(y>0)parts.push(y+' বছর');
+  if(m>0)parts.push(m+' মাস');
+  if(d>0)parts.push(d+' দিন');
+  return parts.length?parts.join(' ')+(!endDate?' (চলমান)':''):'০ দিন';
+}
+function blankSusp(){
+  return{id:'',billNo:'',name:'',post:'',type:'Ministerial',pay:'',grade:'',salary:'',
+    nid:'',dob:'',retire:'',phone:'',bloodGroup:'',prlDate:'',
+    joinDate:'',joinPost:'',
+    currentLoc:'',currentOrderNo:'',currentOrderDate:'',
+    houseType:'',houseInfo:'',houseOrderNo:'',houseOrderDate:'',
+    suspDate:'',rejoinDate:''
+  };
+}
+function getPostOpts(){
+  return state.postOptions||POST_OPTIONS;
+}
+function allPosts(){
+  const o=getPostOpts();
+  return [...new Set([...(o.Ministerial||[]),...(o.Outdoor||[])])];
+}
+function postsFor(type){
+  return (getPostOpts()[type]||[]);
+}
+function showToast(msg,dur=2800){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),dur)}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function blank(){
+  return{id:'',billNo:'',name:'',post:'',type:'Ministerial',pay:'',grade:'',salary:'',
+    nid:'',dob:'',retire:'',phone:'',bloodGroup:'',prlDate:'',photo:'',newp:'no',
+    joinDate:'',joinPost:'',
+    currentLoc:'',currentOrderNo:'',currentOrderDate:'',
+    houseType:'',houseInfo:'',houseOrderNo:'',houseOrderDate:'',
+    prevWp:[{loc:'',orderNo:'',orderDate:''},{loc:'',orderNo:'',orderDate:''},{loc:'',orderNo:'',orderDate:''}],
+    promotions:[
+      {post:'',orderNo:'',date:''},
+      {post:'',orderNo:'',date:''},
+      {post:'',orderNo:'',date:''},
+      {post:'',orderNo:'',date:''}
+    ]
+  };
+}
+
+// ==========================================
+// LOGIN
+// ==========================================
+async function doLogin(){
+  const email=document.getElementById('l-user').value.trim().toLowerCase();
+  const password=document.getElementById('l-pass').value;
+  const err=document.getElementById('l-err'); err.textContent='';
+  if(!firebaseReady){err.textContent='Firebase এখনো configure করা হয়নি। firebase-config অংশে আপনার Project Config বসান।';return}
+  try{
+    const cred=await auth.signInWithEmailAndPassword(email,password);
+    const uid=cred.user.uid;
+    const prof=await db.collection('users').doc(uid).get();
+    if(!prof.exists){await auth.signOut();err.textContent='এই account-এর CPA access profile পাওয়া যায়নি। Admin-এর সাথে যোগাযোগ করুন।';return}
+    const found=prof.data();
+    if(found.active===false){await auth.signOut();err.textContent='এই অ্যাকাউন্টটি নিষ্ক্রিয় করা হয়েছে। অ্যাডমিনের সাথে যোগাযোগ করুন।';return}
+    state.role=found.role; state.currentUser=email; state.userOffice=found.office||'';
+    await load();
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+    document.getElementById('role-label').textContent=(found.label||found.role)+(found.office?` | ${found.office}`:'');
+    renderNav();renderPage();
+  }catch(e){
+    console.error(e);
+    err.textContent=(e.code==='auth/invalid-credential'||e.code==='auth/wrong-password'||e.code==='auth/user-not-found')?'ই-মেইল অথবা পাসওয়ার্ড ভুল।':(e.message||'Login ব্যর্থ হয়েছে।');
+  }
+}
+async function doLogout(){
+  try{if(firebaseReady&&auth)await auth.signOut()}catch(e){}
+  state.role=null;state.currentUser=null;state.userOffice='';state.page='dashboard';state.q='';state.statusFilter='';state.locFilter='';
+  document.getElementById('app').style.display='none';document.getElementById('login-screen').style.display='flex';
+  document.getElementById('l-user').value='';document.getElementById('l-pass').value='';document.getElementById('l-err').textContent='';
+}
+
+// ==========================================
+// NAV
+// ==========================================
+const PAGES=[
+  ['dashboard','ড্যাশবোর্ড'],['staff','স্টাফ রেজিস্টার'],['suspended','সাময়িক বরখাস্ত'],['locations','কর্মস্থল'],
+  ['posts','পদবী ব্যবস্থাপনা'],['reports','রিপোর্ট']
+,['users','ব্যবহারকারী']];
+function renderNav(){
+  const nav=document.getElementById('main-nav');
+  let pages=PAGES;
+  if(state.role==='house_editor')pages=PAGES.filter(([id])=>id==='staff');
+  else if(state.role==='office_editor')pages=PAGES.filter(([id])=>['dashboard','staff'].includes(id));
+  nav.innerHTML=pages.map(([id,lbl])=>
+    `<div class="nav-item${state.page===id?' active':''}" onclick="goPage('${id}')">${lbl}</div>`
+  ).join('');
+}
+
+// ==========================================
+// USER MANAGEMENT (admin only)
+// ==========================================
+function locDocId(n){return String(n).replace(/\//g,'\u2215').trim()}
+let _users=[];
+const USER_ROLES={office_editor:'অফিস ডেটা অপারেটর',house_editor:'হাউস ডেটা এডিটর'};
+async function loadUsers(){
+  if(state.role!=='admin'||!db)return;
+  try{const sn=await db.collection('users').get();_users=sn.docs.map(d=>({id:d.id,...d.data()}));}
+  catch(e){showToast('ব্যবহারকারী তালিকা লোড হয়নি: '+e.message,4500)}
+  if(state.page==='users')renderPage();
+}
+function renderUsers(){
+  if(state.role!=='admin')return '';
+  const me=auth&&auth.currentUser?auth.currentUser.uid:'';
+  const roleOpts=Object.entries(USER_ROLES).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
+  const offOpts=OFFICE_LIST.map(o=>`<option value="${esc(o)}">${esc(o)}</option>`).join('');
+  const rows=_users.map(u=>{
+    const act=u.active!==false, self=u.id===me;
+    return `<tr style="opacity:${act?1:.55}"><td style="font-weight:700">${esc(u.name||'—')}${self?' <span class="badge" style="background:#e3f2fd;color:#1565c0">আপনি</span>':''}<div style="font-size:11px;color:#5b7086">${esc(u.email||'')}</div></td>
+      <td>${esc(u.label||USER_ROLES[u.role]||u.role)}</td><td style="font-size:12px">${esc(u.office||'সকল')}</td>
+      <td><span class="badge" style="background:${act?'#e8f5e9':'#fff5f5'};color:${act?'#2e7d32':'#c0392b'}">${act?'সক্রিয়':'নিষ্ক্রিয়'}</span></td>
+      <td style="white-space:nowrap">${self?'':`<button class="btn btn-white btn-sm" onclick="toggleUser('${u.id}',${act})">${act?'নিষ্ক্রিয় করুন':'সক্রিয় করুন'}</button> `}${u.email?`<button class="btn btn-white btn-sm" onclick="resetUserPass('${esc(u.email)}')">পাসওয়ার্ড রিসেট</button>`:''}</td></tr>`;
+  }).join('');
+  return `<div class="card" style="padding:16px">
+    <h3 style="margin:0 0 10px">ব্যবহারকারী ব্যবস্থাপনা</h3>
+    <div style="overflow-x:auto"><table class="tbl"><thead><tr><th>নাম / ইমেইল</th><th>ভূমিকা</th><th>অফিস</th><th>অবস্থা</th><th>অ্যাকশন</th></tr></thead>
+      <tbody>${rows||'<tr><td colspan="5" style="padding:16px;text-align:center;color:#8b96a3">কোনো ব্যবহারকারী নেই</td></tr>'}</tbody></table></div>
+    <h4 style="margin:18px 0 0">নতুন ব্যবহারকারী তৈরি</h4>
+    <div class="u-grid">
+      <input class="inp" id="u-name" placeholder="নাম">
+      <input class="inp" id="u-email" type="email" placeholder="ইমেইল">
+      <input class="inp" id="u-pass" type="password" placeholder="পাসওয়ার্ড (কমপক্ষে ৮)" autocomplete="new-password">
+      <select class="inp" id="u-role">${roleOpts}</select>
+      <select class="inp" id="u-office">${offOpts}</select>
+      <button class="btn btn-gold" id="u-btn" onclick="createUser()">তৈরি করুন</button>
+    </div>
+    <div style="font-size:11px;color:#5b7086;margin-top:8px">অফিস ডেটা অপারেটর শুধু নিজের অফিসের তথ্য এন্ট্রি/সম্পাদনা করতে পারবে। হাউস ডেটা এডিটর সকল অফিসের তথ্য সম্পাদনা করতে পারবে।</div>
+  </div>`;
+}
+async function createUser(){
+  const v=id=>document.getElementById(id).value.trim();
+  const name=v('u-name'),email=v('u-email').toLowerCase(),pass=document.getElementById('u-pass').value,role=v('u-role'),office=v('u-office');
+  if(!name||!email||pass.length<8){showToast('নাম, ইমেইল ও কমপক্ষে ৮ অক্ষরের পাসওয়ার্ড দিন',3500);return}
+  const btn=document.getElementById('u-btn');btn.disabled=true;
+  let app2=null;
+  try{
+    // second app instance, so the admin's own session is not replaced
+    app2=firebase.apps.find(a=>a.name==='secondary')||firebase.initializeApp(FIREBASE_CONFIG,'secondary');
+    const cred=await app2.auth().createUserWithEmailAndPassword(email,pass);
+    await db.collection('users').doc(cred.user.uid).set({
+      name,email,role,label:USER_ROLES[role],office:role==='office_editor'?office:'',active:true,
+      createdBy:auth.currentUser.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    await app2.auth().signOut();
+    showToast('ব্যবহারকারী তৈরি হয়েছে');
+    await loadUsers();
+  }catch(e){
+    const m={'auth/email-already-in-use':'এই ইমেইল আগেই ব্যবহৃত হয়েছে','auth/invalid-email':'ইমেইল সঠিক নয়','auth/weak-password':'পাসওয়ার্ড দুর্বল'}[e.code]||e.message;
+    showToast('ব্যর্থ: '+m,4500);
+    try{if(app2)await app2.auth().signOut()}catch(_){}
+  }
+  btn.disabled=false;
+}
+async function toggleUser(id,act){
+  try{await db.collection('users').doc(id).update({active:!act});showToast(act?'নিষ্ক্রিয় করা হয়েছে':'সক্রিয় করা হয়েছে');await loadUsers()}
+  catch(e){showToast('ব্যর্থ: '+e.message,4500)}
+}
+async function resetUserPass(email){
+  try{await auth.sendPasswordResetEmail(email);showToast('পাসওয়ার্ড রিসেট লিংক পাঠানো হয়েছে')}
+  catch(e){showToast('ব্যর্থ: '+e.message,4500)}
+}
+// debounced search (keeps focus while typing)
+let _sT=null;
+function searchInput(el){
+  state.q=el.value;state.pageNum=1;clearTimeout(_sT);
+  _sT=setTimeout(()=>{renderPage();const i=document.querySelector('#page-content input.inp');if(i){i.focus();const n=i.value.length;try{i.setSelectionRange(n,n)}catch(_){}}},300);
+}
+
+function goPage(p){if(p==='users')loadUsers();state.page=p;state.pageNum=1;state.q='';renderNav();renderPage()}
+
+
+// ==========================================
+// ROLE / OFFICE / AUDIT HELPERS
+// ==========================================
+function staffOffice(s){
+  if(!s)return '';
+  const loc=(state.locations||[]).find(l=>l.name===s.currentLoc);
+  if(loc&&loc.office)return loc.office;
+  const raw=String(s.currentLoc||'');
+  for(const o of OFFICE_LIST)if(raw.includes(o))return o;
+  return '';
+}
+function canEditStaff(s){
+  if(state.role==='admin')return true;
+  if(state.role==='house_editor')return true;
+  return state.role==='office_editor' && staffOffice(s)===state.userOffice;
+}
+function canAddStaff(){return state.role==='admin'||state.role==='office_editor'}
+function logActivity(action,s,details=''){
+  if(!state.activityLog)state.activityLog=[];
+  state.activityLog.push({
+    id:uid(),timestamp:new Date().toISOString(),user:state.currentUser||'—',
+    role:state.role||'—',office:state.userOffice||staffOffice(s)||'—',
+    action,staffId:s&&s.id?s.id:'',staffName:s&&s.name?s.name:'',details
+  });
+  if(state.activityLog.length>5000)state.activityLog=state.activityLog.slice(-5000);
+}
+function dayKey(d){return new Date(d).toLocaleDateString('en-CA')}
+function officeCounts(){
+  return OFFICE_LIST.map(o=>({office:o,count:state.staff.filter(s=>staffOffice(s)===o).length}));
+}
+function recentOfficeActivity(days=7){
+  const now=new Date(), out={};
+  (state.activityLog||[]).forEach(a=>{
+    const dt=new Date(a.timestamp);
+    if((now-dt)/864e5<=days){
+      const k=dayKey(dt); if(!out[k])out[k]={};
+      const o=a.office||'অন্যান্য'; out[k][o]=(out[k][o]||0)+1;
+    }
+  });
+  return out;
+}
+
+// ==========================================
+// MAIN RENDER ROUTER
+// ==========================================
+function renderPage(){
+  const el=document.getElementById('page-content');
+  if(state.page==='dashboard')el.innerHTML=renderDashboard();
+  else if(state.page==='staff')el.innerHTML=renderStaff();
+  else if(state.page==='suspended')el.innerHTML=renderSuspended();
+  else if(state.page==='posts')el.innerHTML=renderPostsPage();
+  else if(state.page==='locations')el.innerHTML=renderLocations();
+  else if(state.page==='users')el.innerHTML=renderUsers();
+  else if(state.page==='reports')el.innerHTML=renderReports();
+  attachHandlers();
+}
+
+// ==========================================
+// DASHBOARD
+// ==========================================
+function renderDashboard(){
+  const s=state.staff||[];
+  const total=s.length,min=s.filter(x=>x.type==='Ministerial').length,out=s.filter(x=>x.type==='Outdoor').length;
+  const due=s.filter(x=>isDue(x.currentOrderDate)).length;
+  const locs=state.locations||[];
+  const locCount=locs.length;
+  const vac=locs.reduce((a,l)=>a+Math.max(0,(l.san||0)-(l.work||0)),0);
+  const extra=locs.reduce((a,l)=>a+Math.max(0,(l.work||0)-(l.san||0)),0);
+  const newp=s.filter(isNew).length;
+  const prlList=[...s,...(state.suspended||[])].filter(x=>prlDaysLeft(x)!==null);
+  const susp=(state.suspended||[]).length;
+  const dateStr=new Date().toLocaleDateString('bn-BD',{day:'numeric',month:'long',year:'numeric'});
+
+  const cards=[
+    ['👥','মোট স্টাফ',total,'সিস্টেমে নিবন্ধিত','rgba(25,118,210,.10)'],
+    ['🏢','মিনিস্ট্রিয়াল',min,total?`${Math.round(min/total*100)}% of staff`:'—','rgba(46,125,50,.10)'],
+    ['⚓','আউটডোর',out,total?`${Math.round(out/total*100)}% of staff`:'—','rgba(211,169,78,.14)'],
+    ['⏳','২ বছর পূর্ণ',due,'কর্মস্থল পরিবর্তন পর্যালোচনা','rgba(192,57,43,.10)'],
+    ['📍','কর্মস্থল',locCount,'নিবন্ধিত কর্মস্থল','rgba(25,118,210,.10)'],
+    ['🆕','নতুন পোস্টিং',newp,'গত ১৮০ দিনের মধ্যে','rgba(46,125,50,.10)'],
+    ['🚫','সাময়িক বরখাস্ত',susp,'বর্তমান রেকর্ড','rgba(123,31,162,.10)'],
+    ['📅','PRL নোটিশ',prlList.length,'নোটিশ উইন্ডোতে','rgba(192,57,43,.10)'],
+    ['⬜','খালি পদ',vac,'অনুমোদিত − কর্মরত','rgba(192,57,43,.10)'],
+    ['➕','অতিরিক্ত জনবল',extra,'অনুমোদনের অতিরিক্ত','rgba(192,57,43,.10)']
+  ];
+
+  const alerts=[];
+  if(due)alerts.push(['🔴','২ বছর পূর্ণ','বর্তমান কর্মস্থলে ২ বছর পূর্ণ হয়েছে',`${due} জন`,'#fdecea']);
+  if(extra)alerts.push(['⚠️','অতিরিক্ত জনবল','অনুমোদিত পদের তুলনায় বেশি কর্মরত',`${extra} জন`,'#fff4e5']);
+  if(vac)alerts.push(['🟠','খালি পদ','অনুমোদিত পদ এখনো পূরণ হয়নি',`${vac}টি`,'#fff4e5']);
+  if(newp)alerts.push(['🟢','নতুন পোস্টিং','সাম্প্রতিক পোস্টিং শনাক্ত হয়েছে',`${newp} জন`,'#eaf7ed']);
+  if(prlList.length){
+    const names=prlList.slice(0,3).map(x=>`${esc(x.name)} — ${fmtE(x.prlDate)}`).join(' | ');
+    alerts.push(['🔔','PRL NOTICE',`PRL notice window-এ ${prlList.length} জন: ${names}${prlList.length>3?' …':''}`,`${prlList.length} জন`,'#fceff2']);
+  }
+
+  // Office-level manpower — branch বাদ দিয়ে শুধু দপ্তরভিত্তিক
+  const officeRows=officeCounts().map((x,i)=>`
+    <tr>
+      <td style="font-weight:700">${i+1}</td>
+      <td style="font-weight:700;color:${NAVY}">${esc(x.office)}</td>
+      <td style="text-align:center;font-size:20px;font-weight:900;color:${NAVY}">${x.count}</td>
+      <td style="text-align:center">${total?Math.round(x.count/total*100):0}%</td>
+    </tr>`).join('');
+
+  const act=recentOfficeActivity(7);
+  const dates=Object.keys(act).sort().reverse().slice(0,7);
+  const activityRows=dates.length?dates.map(k=>{
+    const d=act[k];
+    return `<tr><td>${fmtE(k)}</td>${OFFICE_LIST.map(o=>`<td style="text-align:center;font-weight:800">${d[o]||0}</td>`).join('')}<td style="text-align:center;font-weight:900">${Object.values(d).reduce((a,b)=>a+b,0)}</td></tr>`;
+  }).join(''):`<tr><td colspan="5" style="text-align:center;color:#8b96a3;padding:15px">এখনো কোনো update activity record নেই।</td></tr>`;
+
+  const quick=[
+    ...(canAddStaff()?[['➕','নতুন স্টাফ','স্টাফ রেজিস্টারে যোগ করুন',"goPage('staff')"]]:[]),
+    ['🔎','স্টাফ খুঁজুন','রেজিস্টার থেকে অনুসন্ধান',"goPage('staff')"],
+    ...(state.role==='admin'?[['📍','কর্মস্থল','দপ্তরভিত্তিক জনবল',"goPage('locations')"],['📊','রিপোর্ট','Excel ও রিপোর্ট দেখুন',"goPage('reports')"]]:[])
+  ];
+
+  return `<div class="dash-wrap">
+    <section class="dash-hero">
+      <div class="dash-kicker">CPA • TRAFFIC DEPARTMENT • EIMS</div>
+      <h1 class="dash-title">প্রশাসনিক ড্যাশবোর্ড</h1>
+      <div class="dash-sub">দপ্তরভিত্তিক জনবল, PRL NOTICE এবং দৈনিক তথ্য হালনাগাদ কার্যক্রম</div>
+      <div class="dash-date">আজ: ${dateStr}</div>
+    </section>
+
+    <section class="dash-kpis">${cards.map(c=>`<div class="dash-kpi">
+      <div class="ico" style="background:${c[4]}">${c[0]}</div><div class="label">${c[1]}</div>
+      <div class="value">${c[2]}</div><div class="hint">${c[3]}</div>
+    </div>`).join('')}</section>
+
+    <div class="dash-grid">
+      <section class="dash-panel">
+        <div class="dash-panel-head"><h3>🏢 কর্মস্থলভিত্তিক জনবল</h3><span>শাখা বাদ দিয়ে — দপ্তর অনুযায়ী</span></div>
+        <div style="overflow-x:auto">
+          <table class="tbl">
+            <thead><tr><th>#</th><th>দপ্তর</th><th style="text-align:center">মোট জনবল</th><th style="text-align:center">শতাংশ</th></tr></thead>
+            <tbody>${officeRows}</tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="dash-panel">
+        <div class="dash-panel-head"><h3>⚠️ Management Alerts</h3><span>${alerts.length}টি গুরুত্বপূর্ণ সূচক</span></div>
+        <div class="alert-list">${alerts.length?alerts.map(a=>`<div class="alert-item">
+          <div class="alert-icon" style="background:${a[4]}">${a[0]}</div>
+          <div style="flex:1"><b>${a[1]}</b><span>${a[2]}</span></div>
+          <strong style="color:#003c73;font-size:13px">${a[3]}</strong>
+        </div>`).join(''):`<div class="alert-item"><div class="alert-icon" style="background:#eaf7ed">✓</div><div><b>কোনো গুরুত্বপূর্ণ Alert নেই</b><span>বর্তমানে সব প্রধান সূচক স্বাভাবিক।</span></div></div>`}</div>
+      </section>
+    </div>
+
+    ${state.role==='admin'?`<div class="dash-grid">
+      <section class="dash-panel">
+        <div class="dash-panel-head"><h3>📈 দপ্তরভিত্তিক দৈনিক তথ্য হালনাগাদ</h3><span>শেষ ৭ দিনের activity</span></div>
+        <div style="overflow-x:auto">
+          <table class="tbl">
+            <thead><tr><th>তারিখ</th>${OFFICE_LIST.map(o=>`<th style="text-align:center">${esc(o)}</th>`).join('')}<th style="text-align:center">মোট</th></tr></thead>
+            <tbody>${activityRows}</tbody>
+          </table>
+        </div>
+      </section>
+      <section class="dash-panel">
+        <div class="dash-panel-head"><h3>🔐 Access Control</h3><span>বর্তমান Login</span></div>
+        <div style="font-size:12px;line-height:2">
+          <div><b>ই-মেইল:</b> ${esc(state.currentUser||'—')}</div>
+          <div><b>Role:</b> ${esc(state.role||'—')}</div>
+          <div><b>Office:</b> ${esc(state.userOffice||'সব দপ্তর')}</div>
+          <div style="margin-top:8px;padding:10px;background:#f5f8fb;border-radius:10px">
+            Admin: সব তথ্য • Office Editor: নিজ দপ্তরের স্টাফ • House Editor: শুধু বাসার তথ্য
+          </div>
+        </div>
+      </section>
+    </div>`:''}
+
+    <div class="dash-grid">
+      <section class="dash-panel">
+        <div class="dash-panel-head"><h3>👥 স্টাফের ধরন</h3><span>বর্তমান ডেটা</span></div>
+        <div class="donut-wrap">
+          <div style="position:relative"><div class="donut" style="--min:${total?Math.round(min/total*100):0}%"></div>
+            <div class="donut-center"><b>${total}</b><small>মোট স্টাফ</small></div></div>
+          <div class="legend">
+            <div class="legend-row"><i class="legend-dot" style="background:#1976d2"></i> মিনিস্ট্রিয়াল <b>${min}</b></div>
+            <div class="legend-row"><i class="legend-dot" style="background:#d3a94e"></i> আউটডোর <b>${out}</b></div>
+          </div>
+        </div>
+      </section>
+      <section class="dash-panel">
+        <div class="dash-panel-head"><h3>⚡ Quick Actions</h3><span>দ্রুত কাজের শর্টকাট</span></div>
+        <div class="quick-grid">${quick.map(q=>`<button class="quick-btn" onclick="${q[3]}"><span style="font-size:20px">${q[0]}</span><strong>${q[1]}</strong><span>${q[2]}</span></button>`).join('')}</div>
+        <div style="margin-top:14px;padding:11px 12px;background:#f5f8fb;border-radius:12px;font-size:10px;color:#71869a;line-height:1.6">
+          💡 PRL NOTICE, ২ বছর পূর্ণ এবং দপ্তরভিত্তিক daily update নিয়মিত পর্যালোচনা করুন।
+        </div>
+      </section>
+    </div>
+  </div>`;
+}
+
+// ==========================================
+// STAFF REGISTER
+// ==========================================
+function renderStaff(){
+  const tab=state.tab,q=state.q.toLowerCase(),sf=state.statusFilter,lf=state.locFilter;
+  let filtered=state.staff.filter(s=>s.type===tab);
+  if(q)filtered=filtered.filter(s=>s.name.toLowerCase().includes(q)||(s.billNo&&s.billNo.toLowerCase().includes(q))||(s.post&&s.post.toLowerCase().includes(q)));
+  if(sf)filtered=filtered.filter(s=>statusOf(s)===sf);
+  if(lf)filtered=filtered.filter(s=>s.currentLoc===lf);
+
+  const PER=20,total=filtered.length,totalPages=Math.max(1,Math.ceil(total/PER));
+  state.pageNum=Math.min(state.pageNum,totalPages);
+  const rows=filtered.slice((state.pageNum-1)*PER,state.pageNum*PER);
+  const locOpts=state.locations.map(l=>`<option value="${esc(l.name)}"${state.locFilter===l.name?' selected':''}>${esc(l.name)}</option>`).join('');
+  const badgeMap={ok:['✓ সক্রিয়','#e8f5e9','#2e7d32'],due:['⏰ ২ বছর পূর্ণ','#fff5f5','#c0392b'],new:['🆕 নতুন','#e3f2fd','#1565c0']};
+
+  return `<div class="card" style="padding:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <div style="display:flex;gap:6px">${['Ministerial','Outdoor'].map(t=>`<div onclick="switchTab('${t}')" style="padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:800;font-size:13px;background:${state.tab===t?NAVY:'#eef3f8'};color:${state.tab===t?'#fff':NAVY}">${t==='Ministerial'?'মিনিস্ট্রিয়াল':'আউটডোর'} (${state.staff.filter(s=>s.type===t).length})</div>`).join('')}</div>
+      ${canAddStaff()?`<div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn btn-white" onclick="openImportPicker()">⬆ Excel ইমপোর্ট</button><button class="btn btn-white" onclick="downloadImportTemplate()">📄 টেমপ্লেট</button><button class="btn btn-gold" onclick="openAdd()">＋ নতুন স্টাফ</button></div>`:''}
+    </div>
+    ${state.role==='office_editor'?`<div style="margin-top:10px;padding:9px 12px;background:#eaf3fb;border-radius:9px;font-size:11px;color:#24516f">🔐 আপনি শুধুমাত্র <b>${esc(state.userOffice)}</b>-এর স্টাফ তথ্য হালনাগাদ করতে পারবেন।</div>`:''}
+    ${state.role==='house_editor'?`<div style="margin-top:10px;padding:9px 12px;background:#fff7e6;border-radius:9px;font-size:11px;color:#7a5410">🏠 House Data Editor: আপনি শুধু বাসা বরাদ্দ সংক্রান্ত তথ্য হালনাগাদ করতে পারবেন।</div>`:''}
+    <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:8px;margin-top:14px">
+      <input class="inp" placeholder="নাম / বিল নম্বর / পদবী খুঁজুন" value="${esc(state.q)}" oninput="searchInput(this)">
+      <select class="inp" onchange="state.statusFilter=this.value;state.pageNum=1;renderPage()"><option value="">সব Status</option><option value="due"${state.statusFilter==='due'?' selected':''}>২ বছর পূর্ণ</option><option value="new"${state.statusFilter==='new'?' selected':''}>নতুন পোস্টিং</option></select>
+      <select class="inp" onchange="state.locFilter=this.value;state.pageNum=1;renderPage()"><option value="">সব কর্মস্থল</option>${locOpts}</select>
+      <button class="btn btn-white" onclick="state.q='';state.statusFilter='';state.locFilter='';state.pageNum=1;renderPage()">Reset</button>
+    </div>
+    <div style="overflow-x:auto;margin-top:14px"><table class="tbl">
+      <thead><tr><th>বিল নম্বর</th><th>নাম</th><th>পদবী</th><th>গ্রেড</th><th>মূল বেতন</th><th>বর্তমান কর্মস্থল</th><th>যোগদানের তারিখ</th><th>স্ট্যাটাস</th><th>Action</th></tr></thead>
+      <tbody>${rows.map(s=>{
+        const st=statusOf(s),[bl,bc,bfc]=badgeMap[st];
+        const editable=canEditStaff(s);
+        return `<tr style="background:${st==='due'?'#fff5f5':st==='new'?'#f3fbf6':'transparent'}">
+          <td>${esc(s.billNo)||'—'}</td><td style="font-weight:700">${esc(s.name)}</td><td>${esc(s.post)}</td><td>${esc(s.grade)}</td><td>${esc(s.salary)}</td>
+          <td style="font-size:12px">${esc(s.currentLoc)||'—'}</td><td style="font-size:12px">${fmtE(s.currentOrderDate)}</td>
+          <td><span class="badge" style="background:${bc};color:${bfc}">${bl}</span>
+          ${(()=>{const dl=prlDaysLeft(s);if(dl===null)return '';if(dl<0)return '<span class="badge" style="background:#b71c1c;color:#fff;margin-left:4px">PRL শেষ</span>';return '<span class="badge" style="background:#fce4ec;color:#b71c1c;margin-left:4px">PRL '+dl+'দিন</span>';})()}</td>
+          <td style="white-space:nowrap"><button class="btn btn-white btn-sm" onclick="openView('${s.id}')" style="margin-right:4px">👁 View</button>
+          ${editable?`<button class="btn btn-navy btn-sm" onclick="openEdit('${s.id}')" style="margin-right:4px">✏️ Edit</button>`:''}
+          ${state.role==='admin'?`<button class="btn btn-red btn-sm" onclick="deleteStaff('${s.id}')">🗑</button>`:''}</td>
+        </tr>`;
+      }).join('')}${rows.length===0?`<tr><td colspan="9" style="padding:20px;text-align:center;color:#8b96a3">কোনো তথ্য পাওয়া যায়নি</td></tr>`:''}</tbody>
+    </table></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:12px;color:#5b7086"><span>মোট ${total} জন — পৃষ্ঠা ${state.pageNum}/${totalPages}</span>
+      <div style="display:flex;gap:6px"><button class="btn btn-white btn-sm" ${state.pageNum<=1?'disabled':''} onclick="state.pageNum--;renderPage()">◀ আগে</button><button class="btn btn-white btn-sm" ${state.pageNum>=totalPages?'disabled':''} onclick="state.pageNum++;renderPage()">পরে ▶</button></div>
+    </div>
+  </div>`;
+}
+function switchTab(t){state.tab=t;state.pageNum=1;renderPage()}
+function attachHandlers(){}
+
+// ==========================================
+// STAFF FORM (ADD/EDIT)
+// ==========================================
+let currentForm=null;let editingId=null;
+
+function openAdd(){
+  editingId=null;currentForm=blank();
+  renderStaffModal();
+}
+function openEdit(id){
+  const s=state.staff.find(x=>x.id===id);if(!s)return;
+  editingId=id;
+  currentForm={...s,prevWp:s.prevWp?JSON.parse(JSON.stringify(s.prevWp)):[{loc:'',orderNo:'',orderDate:''},{loc:'',orderNo:'',orderDate:''},{loc:'',orderNo:'',orderDate:''}]};
+  renderStaffModal();
+}
+
+function renderStaffModalBase(){
+  const f=currentForm;const isEdit=!!editingId;
+  const dis=state.role==='clerk'?'disabled':'';
+  const locOpts=state.locations.map(l=>`<option value="${esc(l.name)}"${f.currentLoc===l.name?' selected':''}>${esc(l.name)}</option>`).join('');
+
+  const prevRows=(f.prevWp||[{loc:'',orderNo:'',orderDate:''},{loc:'',orderNo:'',orderDate:''},{loc:'',orderNo:'',orderDate:''}]).map((pw,i)=>`
+    <div class="prev-row">
+      <div style="font-size:12px;font-weight:700;color:${NAVY};margin-bottom:8px">পূর্ববর্তী কর্মস্থল ${i+1}</div>
+      <div class="grid3">
+        <div>
+          <label class="lbl">কর্মস্থলের নাম</label>
+          <input class="inp" ${dis} value="${esc(pw.loc)}" oninput="currentForm.prevWp[${i}].loc=this.value" placeholder="কর্মস্থলের নাম">
+        </div>
+        <div>
+          <label class="lbl">দপ্তরাদেশ নং</label>
+          <input class="inp" type="text" ${dis} value="${esc(pw.orderNo)}" oninput="currentForm.prevWp[${i}].orderNo=this.value" placeholder="যেমন: ১১৫/২০২৬">
+        </div>
+        <div>
+          <label class="lbl">তারিখ</label>
+          <input class="inp" type="date" ${dis} value="${esc(pw.orderDate)}" onchange="currentForm.prevWp[${i}].orderDate=this.value">
+        </div>
+      </div>
+    </div>`).join('');
+
+  const html=`<div class="overlay" id="staff-modal-overlay" onclick="if(event.target===this)closeStaffModal()">
+    <div class="modal" style="width:min(780px,100%);padding:24px">
+      <h3 style="margin-top:0;color:${NAVY};margin-bottom:16px">${isEdit?'স্টাফ তথ্য সম্পাদনা':'নতুন স্টাফ যোগ করুন'}</h3>
+
+      <!-- BASIC INFO -->
+      <div class="sec-label">📋 মৌলিক তথ্য</div>
+      <!-- Photo upload -->
+      <div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:12px">
+        <div style="flex-shrink:0;text-align:center">
+          <div id="photo-preview" style="width:90px;height:110px;border:2px dashed #c0cfe0;border-radius:8px;overflow:hidden;background:#f5f8fc;display:flex;align-items:center;justify-content:center">
+            ${f.photo?`<img src="${f.photo}" style="width:100%;height:100%;object-fit:cover">`:'<div style="font-size:11px;color:#8b96a3;text-align:center;padding:4px">পাসপোর্ট<br>সাইজ<br>ছবি</div>'}
+          </div>
+          <label class="btn btn-white btn-sm" style="margin-top:6px;display:inline-block;cursor:pointer">
+            📷 ছবি বেছে নিন
+            <input type="file" accept="image/*" style="display:none" onchange="handlePhoto(this)">
+          </label>
+          ${f.photo?`<button class="btn btn-red btn-sm" style="margin-top:4px;display:block;width:100%" onclick="currentForm.photo='';renderStaffModal()">✕ মুছুন</button>`:''}
+        </div>
+        <div style="flex:1">
+          <div style="font-size:12px;color:#5b7086;line-height:1.8">
+            <b>ছবির নির্দেশনা:</b><br>
+            • পাসপোর্ট সাইজ (৩৫×৪৫ মিমি)<br>
+            • সাদা/হালকা রঙের পটভূমি<br>
+            • JPG বা PNG ফরম্যাট<br>
+            • সর্বোচ্চ ২ MB
+          </div>
+        </div>
+      </div>
+      <div class="grid2">
+        <div>
+          <label class="lbl">বিল নম্বর <span style="color:red">*</span></label>
+          <input class="inp" value="${esc(f.billNo)}" oninput="currentForm.billNo=this.value" placeholder="বিল নম্বর">
+        </div>
+        <div>
+          <label class="lbl">নাম <span style="color:red">*</span></label>
+          <input class="inp" ${dis} value="${esc(f.name)}" oninput="currentForm.name=this.value" placeholder="সম্পূর্ণ নাম">
+        </div>
+        <div>
+          <label class="lbl">পদবী <span style="color:red">*</span></label>
+          <select class="inp" id="post-select" ${dis} onchange="currentForm.post=this.value">
+            <option value="">নির্বাচন করুন</option>
+            ${(postsFor(f.type)||[]).map(p=>`<option value="${p}"${f.post===p?' selected':''}>${p}</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label class="lbl">ধরন</label>
+          <select class="inp" ${dis} onchange="currentForm.type=this.value;updatePostSelect(this.value)">
+            <option${f.type==='Ministerial'?' selected':''}>Ministerial</option>
+            <option${f.type==='Outdoor'?' selected':''}>Outdoor</option>
+          </select>
+        </div>
+        <div>
+          <label class="lbl">বেতন কোড</label>
+          <input class="inp" value="${esc(f.pay)}" oninput="currentForm.pay=this.value" placeholder="বেতন কোড">
+        </div>
+        <div>
+          <label class="lbl">গ্রেড</label>
+          <input class="inp" value="${esc(f.grade)}" oninput="currentForm.grade=this.value" placeholder="গ্রেড">
+        </div>
+        <div>
+          <label class="lbl">মূল বেতন</label>
+          <input class="inp" value="${esc(f.salary)}" oninput="currentForm.salary=this.value" placeholder="টাকায়">
+        </div>
+        <div>
+          <label class="lbl">NID</label>
+          <input class="inp" ${dis} value="${esc(f.nid)}" oninput="currentForm.nid=this.value" placeholder="জাতীয় পরিচয়পত্র নম্বর">
+        </div>
+        <div>
+          <label class="lbl">জন্ম তারিখ <span style="font-size:10px;color:#e65100;font-weight:500">← দিলেই অবসর ও PRL auto</span></label>
+          <input class="inp" type="date" ${dis} value="${esc(f.dob)}" onchange="currentForm.dob=this.value;handleDOBChange(this.value,'staff')">
+        </div>
+        <div>
+          <label class="lbl">মোবাইল</label>
+          <input class="inp" ${dis} value="${esc(f.phone)}" oninput="currentForm.phone=this.value" placeholder="মোবাইল নম্বর">
+        </div>
+        <div>
+          <label class="lbl">নতুন পোস্টিং?</label>
+          <select class="inp" ${dis} onchange="currentForm.newp=this.value">
+            <option value="no"${f.newp!=='yes'?' selected':''}>না</option>
+            <option value="yes"${f.newp==='yes'?' selected':''}>হ্যাঁ</option>
+          </select>
+        </div>
+        <div>
+          <label class="lbl">ব্লাড গ্রুপ</label>
+          <select class="inp" ${dis} onchange="currentForm.bloodGroup=this.value">
+            <option value="">নির্বাচন করুন</option>
+            ${['A+','A-','B+','B-','AB+','AB-','O+','O-'].map(bg=>`<option value="${bg}"${f.bloodGroup===bg?' selected':''}>${bg}</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label class="lbl">চাকুরীতে যোগদানের তারিখ</label>
+          <input class="inp" type="date" ${dis} value="${esc(f.joinDate)}" onchange="currentForm.joinDate=this.value">
+        </div>
+        <div>
+          <label class="lbl">চাকুরীতে যোগদানের পদবী</label>
+          <select class="inp" ${dis} onchange="currentForm.joinPost=this.value">
+            <option value="">নির্বাচন করুন</option>
+            ${allPosts().map(p=>`<option value="${p}"${f.joinPost===p?' selected':''}>${p}</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label class="lbl">PRL তারিখ</label>
+          <input class="inp" type="date" ${dis} value="${esc(f.prlDate)}" onchange="currentForm.prlDate=this.value">
+        </div>
+        <div>
+          <label class="lbl">অবসরের তারিখ <span style="font-size:10px;color:#1565c0;font-weight:500">(জন্ম তারিখ থেকে auto)</span></label>
+          <input class="inp" type="date" ${dis} value="${esc(f.retire)}" onchange="currentForm.retire=this.value">
+        </div>
+      </div>
+
+      <!-- PROMOTION HISTORY -->
+      <div class="sec-label">🏅 পদোন্নতির তথ্য (সর্বোচ্চ ৪টি)</div>
+      ${(f.promotions||[{post:'',orderNo:'',date:''},{post:'',orderNo:'',date:''},{post:'',orderNo:'',date:''},{post:'',orderNo:'',date:''}]).map((pr,i)=>`
+        <div class="prev-row" style="margin-bottom:8px">
+          <div style="font-size:12px;font-weight:700;color:#1565c0;margin-bottom:8px">পদোন্নতি ${i+1}</div>
+          <div class="grid3">
+            <div>
+              <label class="lbl">পদবী</label>
+              <select class="inp" ${dis} onchange="currentForm.promotions[${i}].post=this.value">
+                <option value="">নির্বাচন করুন</option>
+                ${allPosts().map(p=>`<option value="${p}"${pr.post===p?' selected':''}>${p}</option>`).join('')}
+              </select>
+            </div>
+            <div>
+              <label class="lbl">দপ্তরাদেশ নং</label>
+              <input class="inp" type="text" ${dis} value="${esc(pr.orderNo)}" oninput="currentForm.promotions[${i}].orderNo=this.value" placeholder="যেমন: ১১৫/২০২৬">
+            </div>
+            <div>
+              <label class="lbl">যোগদানের তারিখ</label>
+              <input class="inp" type="date" ${dis} value="${esc(pr.date)}" onchange="currentForm.promotions[${i}].date=this.value">
+            </div>
+          </div>
+        </div>`).join('')}
+
+      <!-- CURRENT WORKPLACE -->
+      <div class="sec-label">🏢 বর্তমান কর্মস্থল</div>
+      <div class="grid3">
+        <div>
+          <label class="lbl">বর্তমান কর্মস্থল <span style="color:red">*</span></label>
+          <select class="inp" ${dis} onchange="currentForm.currentLoc=this.value">
+            <option value="">নির্বাচন করুন</option>${locOpts}
+          </select>
+        </div>
+        <div>
+          <label class="lbl">যোগদানের দপ্তরাদেশ নং</label>
+          <input class="inp" type="text" ${dis} value="${esc(f.currentOrderNo)}" oninput="currentForm.currentOrderNo=this.value" placeholder="যেমন: ১১৫/২০২৬">
+        </div>
+        <div>
+          <label class="lbl">যোগদানের তারিখ</label>
+          <input class="inp" type="date" ${dis} value="${esc(f.currentOrderDate)}" onchange="currentForm.currentOrderDate=this.value">
+        </div>
+      </div>
+
+      <!-- PREVIOUS WORKPLACES -->
+      <div class="sec-label">📂 পূর্ববর্তী কর্মস্থল (সর্বোচ্চ ৩টি)</div>
+      ${prevRows}
+
+      <!-- HOUSE ALLOCATION -->
+      <div class="sec-label" style="margin-top:16px;background:rgba(211,169,78,.10);border-left-color:#D3A94E">🏠 বাসা বরাদ্দ সংক্রান্ত তথ্য</div>
+      <div class="grid2" id="house-info-section">
+        <div>
+          <label class="lbl">বাসার টাইপ</label>
+          <select class="inp" id="house-type" onchange="currentForm.houseType=this.value">
+            <option value="">নির্বাচন করুন</option>
+            <option value="A"${f.houseType==='A'?' selected':''}>A</option>
+            <option value="B"${f.houseType==='B'?' selected':''}>B</option>
+            <option value="C"${f.houseType==='C'?' selected':''}>C</option>
+            <option value="D"${f.houseType==='D'?' selected':''}>D</option>
+          </select>
+        </div>
+        <div>
+          <label class="lbl">বাসার তথ্য</label>
+          <input class="inp" id="house-info" value="${esc(f.houseInfo)}" oninput="currentForm.houseInfo=this.value" placeholder="বাসার নম্বর/ব্লক/এলাকা ইত্যাদি">
+        </div>
+        <div>
+          <label class="lbl">বাসা বরাদ্দ সংক্রান্ত দপ্তরাদেশ নং</label>
+          <input class="inp" id="house-order-no" value="${esc(f.houseOrderNo)}" oninput="currentForm.houseOrderNo=this.value" placeholder="দপ্তরাদেশ নং">
+        </div>
+        <div>
+          <label class="lbl">তারিখ</label>
+          <input class="inp" type="date" id="house-order-date" value="${esc(f.houseOrderDate)}" onchange="currentForm.houseOrderDate=this.value">
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:20px">
+        <button class="btn btn-white" onclick="closeStaffModal()">বাতিল</button>
+        <button class="btn btn-navy" onclick="saveStaff()">✓ সংরক্ষণ করুন</button>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById('modal-container').innerHTML=html;
+}
+
+function updatePostSelect(type){
+  const sel=document.getElementById('post-select');
+  if(!sel)return;
+  const opts=postsFor(type)||[];
+  const cur=currentForm.post;
+  sel.innerHTML='<option value="">নির্বাচন করুন</option>'+
+    opts.map(p=>`<option value="${p}"${cur===p?' selected':''}>${p}</option>`).join('');
+  if(!opts.includes(cur)){currentForm.post='';sel.value='';}
+}
+
+function handleDOBChange(dob, formType){
+  if(!dob)return;
+  const _p=String(dob).split('-').map(Number);
+  if(_p.length<3||_p.some(isNaN))return;
+  const d=new Date(_p[0],_p[1]-1,_p[2]);
+  const ymd=x=>x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
+
+  // বাংলাদেশ সরকারি নিয়ম: জন্ম মাসের শেষ দিন + ৫৯ বছর = অবসর
+  const retireLastDay=new Date(d.getFullYear()+59, d.getMonth()+1, 0);
+  const retireStr=ymd(retireLastDay);
+
+  // PRL = অবসরের ১ বছর আগে (জন্ম মাসের শেষ দিন + ৫৮ বছর)
+  const prlLastDay=new Date(d.getFullYear()+58, d.getMonth()+1, 0);
+  const prlStr=ymd(prlLastDay);
+
+  if(formType==='staff'){
+    currentForm.retire=retireStr;
+    currentForm.prlDate=prlStr;
+    // DOM সরাসরি আপডেট (পুরো modal re-render ছাড়া)
+    const inputs=document.querySelectorAll('#modal-container input[type="date"]');
+    inputs.forEach(inp=>{
+      if(inp.getAttribute('onchange')&&inp.getAttribute('onchange').includes('currentForm.retire'))
+        {inp.value=retireStr;}
+      if(inp.getAttribute('onchange')&&inp.getAttribute('onchange').includes('currentForm.prlDate'))
+        {inp.value=prlStr;}
+    });
+  } else if(formType==='susp'){
+    suspForm.retire=retireStr;
+    suspForm.prlDate=prlStr;
+    const inputs=document.querySelectorAll('#modal-container input[type="date"]');
+    inputs.forEach(inp=>{
+      if(inp.getAttribute('onchange')&&inp.getAttribute('onchange').includes('suspForm.retire'))
+        {inp.value=retireStr;}
+      if(inp.getAttribute('onchange')&&inp.getAttribute('onchange').includes('suspForm.prlDate'))
+        {inp.value=prlStr;}
+    });
+  }
+  showToast('✅ অবসর: '+fmtE(retireStr)+' | PRL: '+fmtE(prlStr)+' — স্বয়ংক্রিয় হিসাব');
+}
+
+function _compressPhoto(file,done,fail){
+  const url=URL.createObjectURL(file);
+  const img=new Image();
+  img.onload=()=>{
+    try{
+      const MAX=360;
+      let w=img.naturalWidth,h=img.naturalHeight;
+      const sc=Math.min(1,MAX/Math.max(w,h));
+      w=Math.max(1,Math.round(w*sc));h=Math.max(1,Math.round(h*sc));
+      const cv=document.createElement('canvas');cv.width=w;cv.height=h;
+      const cx=cv.getContext('2d');cx.fillStyle='#fff';cx.fillRect(0,0,w,h);cx.drawImage(img,0,0,w,h);
+      let q=0.82,out=cv.toDataURL('image/jpeg',q);
+      while(out.length>90000&&q>0.4){q-=0.1;out=cv.toDataURL('image/jpeg',q)}
+      URL.revokeObjectURL(url);done(out);
+    }catch(err){URL.revokeObjectURL(url);fail(err)}
+  };
+  img.onerror=()=>{URL.revokeObjectURL(url);fail(new Error('image'))};
+  img.src=url;
+}
+function handlePhoto(input){
+  const file=input.files[0];
+  if(!file)return;
+  if(!/^image\//.test(file.type)){showToast('শুধু ছবির ফাইল (JPG/PNG) দিন');return;}
+  if(file.size>15*1024*1024){showToast('ছবির আকার ১৫ MB-এর বেশি হবে না');return;}
+  _compressPhoto(file,dataUrl=>{
+    currentForm.photo=dataUrl;
+    const preview=document.getElementById('photo-preview');
+    if(preview)preview.innerHTML=`<img src="${dataUrl}" style="width:100%;height:100%;object-fit:cover">`;
+    // Show delete button
+    const wrap=preview&&preview.parentElement;
+    if(wrap){const existing=wrap.querySelector('.del-photo');if(existing)existing.remove();
+      const btn=document.createElement('button');btn.className='btn btn-red btn-sm del-photo';
+      btn.style='margin-top:4px;display:block;width:100%';btn.textContent='✕ মুছুন';
+      btn.onclick=()=>{currentForm.photo='';renderStaffModal();};wrap.appendChild(btn);}
+  },()=>showToast('ছবি পড়া যায়নি, অন্য ছবি চেষ্টা করুন'));
+}
+
+function closeStaffModal(){document.getElementById('modal-container').innerHTML=''}
+
+function saveStaff(){
+  const f=currentForm;
+  if(!f.name.trim()){showToast('নাম লিখুন');return}
+  if(!f.billNo.trim()){showToast('বিল নম্বর লিখুন');return}
+  if(!f.post){showToast('পদবী নির্বাচন করুন');return}
+  if(!f.currentLoc){showToast('বর্তমান কর্মস্থল নির্বাচন করুন');return}
+
+  if(editingId){
+    const idx=state.staff.findIndex(x=>x.id===editingId);
+    if(idx>=0){state.staff[idx]={...f,id:editingId}}
+  }else{
+    state.staff.push({...f,id:uid()});
+  }
+  save();closeStaffModal();renderPage();
+  showToast(editingId?'তথ্য আপডেট হয়েছে':'নতুন স্টাফ যোগ হয়েছে');
+}
+
+async function deleteStaff(id){
+  if(!confirm('এই কর্মচারীর তথ্য মুছে ফেলবেন?'))return;
+  const st=state.staff.find(x=>x.id===id);
+  if(!st)return;
+  if(!canEditStaff(st)){showToast('এই স্টাফের তথ্য মুছে ফেলার অনুমতি নেই');return}
+  state.staff=state.staff.filter(x=>x.id!==id);
+  logActivity('staff_delete',st,'স্টাফ রেকর্ড মুছে ফেলা');
+  try{
+    if(firebaseReady&&db&&auth?.currentUser) await db.collection('staff').doc(id).delete();
+    await save();
+  }catch(e){console.error(e);showSaveErr('Cloud থেকে রেকর্ড মুছতে সমস্যা: '+e.message)}
+  renderPage();showToast('স্টাফ মুছে ফেলা হয়েছে');
+}
+
+
+// ==========================================
+// ROLE-AWARE STAFF FORM OVERRIDES
+// ==========================================
+const _renderStaffModalBase=renderStaffModalBase;
+function openAdd(){
+  if(!canAddStaff()){showToast('আপনার Login-এ নতুন স্টাফ যোগ করার অনুমতি নেই');return}
+  editingId=null;currentForm=blank();renderStaffModal();
+}
+function openEdit(id){
+  const st=state.staff.find(x=>x.id===id);if(!st)return;
+  if(!canEditStaff(st)){showToast('এই স্টাফের তথ্য আপনার দপ্তরের আওতাভুক্ত নয়');return}
+  editingId=id;
+  currentForm={...st,
+    prevWp:st.prevWp?JSON.parse(JSON.stringify(st.prevWp)):[{loc:'',orderNo:'',orderDate:''},{loc:'',orderNo:'',orderDate:''},{loc:'',orderNo:'',orderDate:''}],
+    promotions:st.promotions?JSON.parse(JSON.stringify(st.promotions)):[{post:'',orderNo:'',date:''},{post:'',orderNo:'',date:''},{post:'',orderNo:'',date:''},{post:'',orderNo:'',date:''}]
+  };
+  renderStaffModal();
+}
+function renderStaffModal(){
+  _renderStaffModalBase();
+  const modal=document.querySelector('#modal-container .modal');
+  if(!modal)return;
+  // Ensure house values exist for old records
+  currentForm.houseType=currentForm.houseType||'';
+  currentForm.houseInfo=currentForm.houseInfo||'';
+  currentForm.houseOrderNo=currentForm.houseOrderNo||'';
+  currentForm.houseOrderDate=currentForm.houseOrderDate||'';
+
+  if(state.role==='house_editor'){
+    modal.querySelectorAll('input,select,textarea,button').forEach(el=>{
+      if(['house-type','house-info','house-order-no','house-order-date'].includes(el.id))return;
+      if(el.tagName==='BUTTON' && el.textContent.includes('বাতিল'))return;
+      el.disabled=true;
+    });
+    modal.querySelectorAll('input[type=file]').forEach(el=>el.disabled=true);
+    const saveBtn=[...modal.querySelectorAll('button')].find(b=>b.textContent.includes('সংরক্ষণ'));
+    if(saveBtn)saveBtn.textContent='🏠 বাসার তথ্য সংরক্ষণ করুন';
+    const title=modal.querySelector('h3');
+    if(title)title.textContent='🏠 বাসা বরাদ্দ তথ্য হালনাগাদ';
+  }
+}
+function saveStaff(){
+  const f=currentForm;
+  if(!f.name.trim()&&!editingId){showToast('নাম লিখুন');return}
+  if(!f.billNo.trim()&&!editingId){showToast('বিল নম্বর লিখুন');return}
+
+  if(state.role==='house_editor'){
+    if(!editingId){showToast('House Editor নতুন স্টাফ যোগ করতে পারবেন না');return}
+    const idx=state.staff.findIndex(x=>x.id===editingId); if(idx<0)return;
+    const old={...state.staff[idx]};
+    state.staff[idx]={...old,houseType:f.houseType||'',houseInfo:f.houseInfo||'',houseOrderNo:f.houseOrderNo||'',houseOrderDate:f.houseOrderDate||''};
+    logActivity('house_update',state.staff[idx],'বাসা বরাদ্দ তথ্য হালনাগাদ');
+    save();closeStaffModal();renderPage();showToast('🏠 বাসা সংক্রান্ত তথ্য হালনাগাদ হয়েছে');return;
+  }
+
+  if(!f.post){showToast('পদবী নির্বাচন করুন');return}
+  if(!f.currentLoc){showToast('বর্তমান কর্মস্থল নির্বাচন করুন');return}
+
+  if(state.role==='office_editor'){
+    const old=editingId?state.staff.find(x=>x.id===editingId):null;
+    const office=staffOffice(old||f);
+    if(editingId && office!==state.userOffice){showToast('শুধু নিজের দপ্তরের স্টাফ আপডেট করা যাবে');return}
+    const newOffice=staffOffice({...f});
+    if(newOffice && newOffice!==state.userOffice){showToast('স্টাফকে অন্য দপ্তরে স্থানান্তর করার অনুমতি নেই');return}
+  }
+
+  let saved;
+  if(editingId){
+    const idx=state.staff.findIndex(x=>x.id===editingId);
+    if(idx>=0){state.staff[idx]={...f,id:editingId,office:staffOffice(f)||state.staff[idx].office||state.userOffice||''};saved=state.staff[idx];}
+  }else{
+    saved={...f,id:uid(),office:staffOffice(f)||state.userOffice||''};state.staff.push(saved);
+  }
+  if(saved)logActivity(editingId?'update':'add',saved,editingId?'স্টাফ তথ্য হালনাগাদ':'নতুন স্টাফ যোগ');
+  logActivity(editingId?'staff_update':'staff_create',saved,editingId?'স্টাফ তথ্য হালনাগাদ':'নতুন স্টাফ যোগ');
+  save();closeStaffModal();renderPage();showToast(editingId?'তথ্য আপডেট হয়েছে':'নতুন স্টাফ যোগ হয়েছে');
+}
+
+// ==========================================
+// STAFF VIEW / PRINT
+// ==========================================
+function openView(id){
+  const s=state.staff.find(x=>x.id===id);if(!s)return;
+  renderViewModal(s);
+}
+
+function renderViewModalBase(s){
+  const pw=s.prevWp||[];
+  const allWorkplaces=[
+    {label:'বর্তমান',loc:s.currentLoc,orderNo:s.currentOrderNo,orderDate:s.currentOrderDate,current:true},
+    ...pw.filter(p=>p.loc).map((p,i)=>({label:`পূর্ববর্তী ${i+1}`,loc:p.loc,orderNo:p.orderNo,orderDate:p.orderDate,current:false}))
+  ];
+
+  const wpRows=allWorkplaces.map((w,i)=>`<tr${w.current?' style="background:#e8f5e9;font-weight:600"':''}>
+    <td style="text-align:center">${i+1}</td>
+    <td><span class="badge" style="background:${w.current?'#c8e6c9':'#e3f2fd'};color:${w.current?'#2e7d32':'#1565c0'};font-size:10px">${w.label}</span></td>
+    <td>${esc(w.loc)||'—'}</td>
+    <td style="text-align:center">${esc(w.orderNo)||'—'}</td>
+    <td style="text-align:center">${fmtE(w.orderDate)}</td>
+  </tr>`).join('');
+
+  const html=`<div class="overlay" id="view-modal-overlay" onclick="if(event.target===this)closeViewModal()">
+    <div class="modal" style="width:min(720px,100%);padding:0">
+      <!-- Print Letterhead -->
+      <div style="text-align:center;padding:20px 24px 10px;border-bottom:2px solid #003C73">
+        <img src="${CPA_LOGO}" alt="CPA" onerror="this.style.display='none'"
+          style="width:70px;height:70px;border-radius:50%;object-fit:cover;border:2px solid #003C73;margin-bottom:8px;background:#f0f0f0">
+        <div style="font-size:17px;font-weight:700;color:${NAVY};font-family:'Tiro Bangla',serif">চট্টগ্রাম বন্দর কর্তৃপক্ষ</div>
+        <div style="font-size:13px;color:#444;margin-top:3px">পরিচালক (ট্রাফিক) এর দপ্তর</div>
+        <div style="font-size:12px;color:#666;margin-top:2px">বন্দর ভবন, বন্দর, চট্টগ্রাম-৪১০০</div>
+        <div style="font-size:11px;color:#888;margin-top:2px">www.cpa.gov.bd</div>
+      </div>
+
+      <div style="padding:20px 24px">
+        <!-- PERSONAL INFO -->
+        <div class="sec-label" style="margin-top:0">কর্মচারীর ব্যক্তিগত তথ্য</div>
+        <div style="display:flex;gap:16px;align-items:flex-start">
+          <div style="flex:1">
+          <div class="grid2" style="font-size:13px;gap:6px 12px">
+          ${[
+            ['বিল নম্বর',s.billNo],['নাম',s.name],['পদবী',s.post],['ধরন',s.type],
+            ['বেতন কোড',s.pay],['গ্রেড',s.grade],['মূল বেতন',s.salary],['NID',s.nid],
+            ['জন্ম তারিখ',fmtE(s.dob)],['মোবাইল',s.phone],['ব্লাড গ্রুপ',s.bloodGroup],['চাকুরীতে যোগদানের তারিখ',fmtE(s.joinDate)],['চাকুরীতে যোগদানের পদবী',s.joinPost],['PRL তারিখ',fmtE(s.prlDate)],['অবসরের তারিখ',fmtE(s.retire)]
+          ].map(([k,v])=>k?`<div><b style="color:#264257">${k}:</b> ${esc(v)||'—'}</div>`:'<div></div>').join('')}
+          </div>
+          </div>
+          ${s.photo?`<div style="flex-shrink:0"><img src="${s.photo}" style="width:90px;height:110px;object-fit:cover;border:2px solid #003C73;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.15)"></div>`:''}
+        </div>
+
+        <!-- PROMOTION TABLE -->
+        ${(s.promotions||[]).some(p=>p.post)?`
+        <div class="sec-label">🏅 পদোন্নতির তথ্য</div>
+        <div style="overflow-x:auto;margin-bottom:8px">
+          <table class="tbl" style="border:1px solid #c0cfe0">
+            <thead><tr style="background:#1565c0;color:#fff">
+              <th style="padding:7px;text-align:center;width:40px">ক্রম</th>
+              <th style="padding:7px">পদবী</th>
+              <th style="padding:7px;text-align:center">দপ্তরাদেশ নং</th>
+              <th style="padding:7px;text-align:center">তারিখ</th>
+            </tr></thead>
+            <tbody>
+              ${(s.promotions||[]).filter(p=>p.post).map((p,i)=>`<tr>
+                <td style="text-align:center;padding:6px">${i+1}</td>
+                <td style="padding:6px;font-weight:600">${esc(p.post)}</td>
+                <td style="text-align:center;padding:6px">${esc(p.orderNo)||'—'}</td>
+                <td style="text-align:center;padding:6px">${fmtE(p.date)}</td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`:''}
+
+        <!-- WORKPLACE TABLE -->
+        <div class="sec-label">কর্মস্থলের ইতিহাস</div>
+        <div style="overflow-x:auto">
+          <table class="tbl" style="border:1px solid #c0cfe0">
+            <thead><tr style="background:${NAVY};color:#fff">
+              <th style="padding:8px;text-align:center;width:40px">ক্রম</th>
+              <th style="padding:8px;width:90px">অবস্থান</th>
+              <th style="padding:8px">কর্মস্থলের নাম</th>
+              <th style="padding:8px;text-align:center;width:100px">দপ্তরাদেশ নং</th>
+              <th style="padding:8px;text-align:center;width:110px">তারিখ</th>
+            </tr></thead>
+            <tbody>${wpRows}</tbody>
+          </table>
+        </div>
+
+        <!-- Footer text -->
+        <div style="margin-top:20px;padding:10px 14px;background:#f8f9fa;border-radius:8px;border:1px solid #e0e0e0;font-size:12px;color:#555;font-style:italic;text-align:center">
+          This is a system-generated record. No separate signature is required.
+        </div>
+
+        <!-- Action buttons (no-print) -->
+        <div class="no-print" style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+          <button class="btn btn-white" onclick="closeViewModal()">বন্ধ করুন</button>
+          <button class="btn btn-navy" onclick="printRecord()">🖨️ প্রিন্ট করুন</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById('modal-container').innerHTML=html;
+}
+
+function closeViewModal(){document.getElementById('modal-container').innerHTML=''}
+
+function printRecord(){
+  const modal=document.querySelector('#modal-container .modal');
+  if(!modal)return;
+  // Clone and strip .no-print elements so inline display:flex can't override
+  const clone=modal.cloneNode(true);
+  clone.querySelectorAll('.no-print').forEach(el=>el.remove());
+  const content=clone.innerHTML;
+  const win=window.open('','_print','width=800,height=900');
+  if(!win){showToast('পপআপ ব্লক করা আছে। ব্রাউজারের পপআপ অনুমতি দিয়ে আবার চেষ্টা করুন',4500);return}
+  win.document.write(`<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>কর্মচারী তথ্য — CPA</title>
+    <style>
+      *{box-sizing:border-box;margin:0;padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      @page{size:A4;margin:12mm}
+      tr,img{page-break-inside:avoid}
+      body{font-family:'Hind Siliguri',sans-serif;color:#000;padding:20px;font-size:13px}
+      h1,h2,h3,h4{font-family:'Tiro Bangla',serif;font-weight:400}
+      .no-print{display:none!important}
+      .grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px}
+      .sec-label{font-size:12px;font-weight:700;background:#e8f0f8;padding:5px 10px;margin:12px 0 8px;border-left:3px solid #003C73}
+      table{width:100%;border-collapse:collapse;font-size:12px}
+      th,td{border:1px solid #999;padding:6px 8px}
+      thead tr{background:#003C73;color:#fff}
+      .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700}
+    </style>
+  </head><body>${content}<script>window.onload=function(){(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){setTimeout(function(){window.print();setTimeout(function(){window.close()},800)},250)})}<\/script></body></html>`);
+  win.document.close();
+}
+
+
+
+// Add house allocation section to the existing staff view
+const _renderViewModalBase=renderViewModalBase;
+function renderViewModal(s){
+  _renderViewModalBase(s);
+  const modal=document.querySelector('#modal-container .modal');
+  if(!modal)return;
+  const host=modal.querySelector('.no-print');
+  const sec=document.createElement('div');
+  sec.className='house-view-section';
+  sec.innerHTML=`<div class="sec-label" style="background:rgba(211,169,78,.10);border-left-color:#D3A94E">🏠 বাসা বরাদ্দ সংক্রান্ত তথ্য</div>
+    <div class="grid2" style="font-size:13px">
+      <div><b style="color:#264257">বাসার টাইপ:</b> ${esc(s.houseType)||'—'}</div>
+      <div><b style="color:#264257">বাসার তথ্য:</b> ${esc(s.houseInfo)||'—'}</div>
+      <div><b style="color:#264257">দপ্তরাদেশ নং:</b> ${esc(s.houseOrderNo)||'—'}</div>
+      <div><b style="color:#264257">তারিখ:</b> ${fmtE(s.houseOrderDate)}</div>
+    </div>`;
+  if(host)host.parentElement.insertBefore(sec,host);else modal.appendChild(sec);
+}
+
+// ==========================================
+// SUSPENDED REGISTER
+// ==========================================
+let suspForm=null;let suspEditId=null;
+
+function renderSuspended(){
+  const q=state.q.toLowerCase();
+  let filtered=(state.suspended||[]);
+  if(q)filtered=filtered.filter(s=>
+    s.name.toLowerCase().includes(q)||
+    (s.billNo&&s.billNo.toLowerCase().includes(q))
+  );
+  const PER=20;const total=filtered.length;
+  const totalPages=Math.max(1,Math.ceil(total/PER));
+  state.pageNum=Math.min(state.pageNum,totalPages);
+  const rows=filtered.slice((state.pageNum-1)*PER,state.pageNum*PER);
+
+  return `<div class="card" style="padding:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px">
+      <div>
+        <h3 style="margin:0;color:#7b1fa2;font-size:16px">সাময়িক বরখাস্ত কর্মচারী রেজিস্টার</h3>
+        <div style="font-size:12px;color:#8b96a3;margin-top:2px">মোট: ${total} জন</div>
+      </div>
+      ${state.role==='admin'?`<button class="btn" style="background:#7b1fa2;color:#fff" onclick="openAddSusp()">＋ নতুন এন্ট্রি</button>`:''}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:14px">
+      <input class="inp" placeholder="নাম বা বিল নম্বর খুঁজুন" value="${esc(state.q)}" oninput="searchInput(this)">
+      <button class="btn btn-white" onclick="state.q='';state.pageNum=1;renderPage()">Reset</button>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="tbl">
+        <thead><tr>
+          <th>বিল নম্বর</th><th>নাম</th><th>পদবী</th><th>ধরন</th>
+          <th>বর্তমান কর্মস্থল</th>
+          <th>বরখাস্তের তারিখ</th><th>সময়কাল</th><th>যোগদানের তারিখ</th><th>Action</th>
+        </tr></thead>
+        <tbody>
+          ${rows.map(s=>`<tr style="background:rgba(123,31,162,.04)">
+            <td>${esc(s.billNo)||'—'}</td>
+            <td style="font-weight:700">${esc(s.name)}</td>
+            <td>${esc(s.post)}</td>
+            <td>${esc(s.type)}</td>
+            <td style="font-size:12px">${esc(s.currentLoc)||'—'}</td>
+            <td style="font-size:12px">${fmtE(s.suspDate)}</td>
+            <td style="font-size:12px;color:${s.rejoinDate?'#2e7d32':'#b71c1c'}">${calcDuration(s.suspDate,s.rejoinDate)}</td>
+            <td style="font-size:12px">${s.rejoinDate?fmtE(s.rejoinDate):'<span style="color:#b71c1c;font-weight:700">চলমান</span>'}</td>
+            <td style="white-space:nowrap">
+              <button class="btn btn-white btn-sm" onclick="openSuspView('${s.id}')" style="margin-right:4px">👁 View</button>
+              ${state.role==='admin'?`<button class="btn btn-navy btn-sm" onclick="openEditSusp('${s.id}')" style="margin-right:4px">✏️ Edit</button>
+              <button class="btn btn-red btn-sm" onclick="deleteSusp('${s.id}')">🗑</button>`:''}
+            </td>
+          </tr>`).join('')}
+          ${rows.length===0?`<tr><td colspan="9" style="padding:20px;text-align:center;color:#8b96a3">কোনো তথ্য পাওয়া যায়নি</td></tr>`:''}
+        </tbody>
+      </table>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:12px;color:#5b7086">
+      <span>পৃষ্ঠা ${state.pageNum}/${totalPages}</span>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-white btn-sm" ${state.pageNum<=1?'disabled':''} onclick="state.pageNum--;renderPage()">◀ আগে</button>
+        <button class="btn btn-white btn-sm" ${state.pageNum>=totalPages?'disabled':''} onclick="state.pageNum++;renderPage()">পরে ▶</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function openAddSusp(){suspEditId=null;suspForm=blankSusp();renderSuspModal();}
+function openEditSusp(id){
+  const s=(state.suspended||[]).find(x=>x.id===id);if(!s)return;
+  suspEditId=id;suspForm={...s};renderSuspModal();
+}
+
+function renderSuspModal(){
+  const f=suspForm;const isEdit=!!suspEditId;
+  const dis=''; // suspension form - admin only, no dis restriction
+  const locOpts=state.locations.map(l=>`<option value="${esc(l.name)}"${f.currentLoc===l.name?' selected':''}>${esc(l.name)}</option>`).join('');
+  const html2=`<div class="overlay" onclick="if(event.target===this)closeSuspModal()">
+    <div class="modal" style="width:min(700px,100%);padding:24px">
+      <h3 style="margin-top:0;color:#7b1fa2;margin-bottom:16px">${isEdit?'সাময়িক বরখাস্ত — তথ্য সম্পাদনা':'নতুন সাময়িক বরখাস্ত এন্ট্রি'}</h3>
+
+      <!-- STAFF SEARCH (new entry only) -->
+      ${!isEdit?`
+      <div style="background:rgba(123,31,162,.07);border:1px solid rgba(123,31,162,.2);border-radius:10px;padding:12px;margin-bottom:14px">
+        <div style="font-size:13px;font-weight:700;color:#7b1fa2;margin-bottom:8px">🔍 স্টাফ রেজিস্টার থেকে তথ্য আনুন</div>
+        <div style="font-size:12px;color:#555;margin-bottom:8px">বিল নম্বর বা নাম টাইপ করুন — তথ্য স্বয়ংক্রিয়ভাবে পূরণ হয়ে যাবে</div>
+        <div style="position:relative">
+          <input class="inp" id="susp-search" placeholder="বিল নম্বর বা নামের অংশ লিখুন..." oninput="searchSuspStaff(this.value)"
+            style="background:rgba(255,255,255,.9)">
+          <div id="susp-search-results" style="position:absolute;top:100%;left:0;right:0;z-index:99;background:#fff;border:1px solid #c0cfe0;border-radius:0 0 8px 8px;max-height:200px;overflow-y:auto;display:none"></div>
+        </div>
+        ${f.name?`<div style="margin-top:8px;font-size:12px;color:#2e7d32;font-weight:600">✅ তথ্য লোড হয়েছে: ${esc(f.name)} (${esc(f.billNo)}) — শুধু বরখাস্তের তথ্য পূরণ করুন</div>`:''}
+      </div>`:''}
+
+      <div class="sec-label">📋 মৌলিক তথ্য</div>
+      <!-- Photo display if loaded -->
+      ${f.photo?`<div style="text-align:right;margin-bottom:8px"><img src="${f.photo}" style="width:70px;height:86px;object-fit:cover;border:2px solid #7b1fa2;border-radius:6px"></div>`:''}
+      <div class="grid2">
+        <div><label class="lbl">বিল নম্বর <span style="color:red">*</span></label>
+          <input class="inp" value="${esc(f.billNo)}" oninput="suspForm.billNo=this.value" placeholder="বিল নম্বর"></div>
+        <div><label class="lbl">নাম <span style="color:red">*</span></label>
+          <input class="inp" value="${esc(f.name)}" oninput="suspForm.name=this.value" placeholder="সম্পূর্ণ নাম"></div>
+        <div><label class="lbl">পদবী</label>
+          <select class="inp" id="susp-post-select" onchange="suspForm.post=this.value">
+            <option value="">নির্বাচন করুন</option>
+            ${(postsFor(f.type)||[]).map(p=>`<option value="${p}"${f.post===p?' selected':''}>${p}</option>`).join('')}
+          </select></div>
+        <div><label class="lbl">ধরন</label>
+          <select class="inp" onchange="suspForm.type=this.value;updateSuspPostSelect(this.value)">
+            <option${f.type==='Ministerial'?' selected':''}>Ministerial</option>
+            <option${f.type==='Outdoor'?' selected':''}>Outdoor</option>
+          </select></div>
+        <div><label class="lbl">বেতন কোড</label>
+          <input class="inp" value="${esc(f.pay)}" oninput="suspForm.pay=this.value"></div>
+        <div><label class="lbl">গ্রেড</label>
+          <input class="inp" value="${esc(f.grade)}" oninput="suspForm.grade=this.value"></div>
+        <div><label class="lbl">মূল বেতন</label>
+          <input class="inp" value="${esc(f.salary)}" oninput="suspForm.salary=this.value" placeholder="টাকায়"></div>
+        <div><label class="lbl">NID</label>
+          <input class="inp" value="${esc(f.nid)}" oninput="suspForm.nid=this.value"></div>
+        <div><label class="lbl">জন্ম তারিখ</label>
+          <input class="inp" type="date" value="${esc(f.dob)}" onchange="suspForm.dob=this.value;handleDOBChange(this.value,'susp')"></div>
+        <div><label class="lbl">মোবাইল</label>
+          <input class="inp" value="${esc(f.phone)}" oninput="suspForm.phone=this.value"></div>
+        <div><label class="lbl">ব্লাড গ্রুপ</label>
+          <select class="inp" onchange="suspForm.bloodGroup=this.value">
+            <option value="">নির্বাচন করুন</option>
+            ${['A+','A-','B+','B-','AB+','AB-','O+','O-'].map(bg=>`<option value="${bg}"${f.bloodGroup===bg?' selected':''}>${bg}</option>`).join('')}
+          </select></div>
+        <div><label class="lbl">চাকুরীতে যোগদানের তারিখ</label>
+          <input class="inp" type="date" value="${esc(f.joinDate)}" onchange="suspForm.joinDate=this.value"></div>
+        <div><label class="lbl">চাকুরীতে যোগদানের পদবী</label>
+          <select class="inp" onchange="suspForm.joinPost=this.value">
+            <option value="">নির্বাচন করুন</option>
+            ${allPosts().map(p=>`<option value="${p}"${f.joinPost===p?' selected':''}>${p}</option>`).join('')}
+          </select></div>
+        <div><label class="lbl">PRL তারিখ</label>
+          <input class="inp" type="date" value="${esc(f.prlDate)}" onchange="suspForm.prlDate=this.value"></div>
+        <div><label class="lbl">অবসরের তারিখ</label>
+          <input class="inp" type="date" value="${esc(f.retire)}" onchange="suspForm.retire=this.value"></div>
+      </div>
+
+      <div class="sec-label">🏢 বর্তমান কর্মস্থল</div>
+      <div class="grid3">
+        <div><label class="lbl">বর্তমান কর্মস্থল</label>
+          <select class="inp" onchange="suspForm.currentLoc=this.value">
+            <option value="">নির্বাচন করুন</option>${locOpts}
+          </select></div>
+        <div><label class="lbl">দপ্তরাদেশ নং</label>
+          <input class="inp" type="text" value="${esc(f.currentOrderNo)}" oninput="suspForm.currentOrderNo=this.value" placeholder="যেমন: ১১৫/২০২৬"></div>
+        <div><label class="lbl">যোগদানের তারিখ</label>
+          <input class="inp" type="date" value="${esc(f.currentOrderDate)}" onchange="suspForm.currentOrderDate=this.value"></div>
+      </div>
+
+      <div class="sec-label" style="background:rgba(123,31,162,.08);border-color:#7b1fa2">⛔ সাময়িক বরখাস্তের তথ্য</div>
+      <div class="grid3">
+        <div><label class="lbl">বরখাস্তের তারিখ <span style="color:red">*</span></label>
+          <input class="inp" type="date" value="${esc(f.suspDate)}" onchange="suspForm.suspDate=this.value;updateSuspDuration()"></div>
+        <div><label class="lbl">সময়কাল (স্বয়ংক্রিয়)</label>
+          <input class="inp" id="susp-duration" readonly value="${calcDuration(f.suspDate,f.rejoinDate)}" style="background:#f5f5f5;color:#555;font-weight:600"></div>
+        <div><label class="lbl">কর্মস্থলে যোগদানের তারিখ</label>
+          <input class="inp" type="date" value="${esc(f.rejoinDate)}" onchange="suspForm.rejoinDate=this.value;updateSuspDuration()">
+          <div style="font-size:11px;color:#8b96a3;margin-top:3px">খালি রাখলে 'চলমান' দেখাবে</div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:20px">
+        <button class="btn btn-white" onclick="closeSuspModal()">বাতিল</button>
+        <button class="btn" style="background:#7b1fa2;color:#fff" onclick="saveSusp()">✓ সংরক্ষণ করুন</button>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById('modal-container').innerHTML=html2;
+}
+
+
+function searchSuspStaff(q){
+  const res=document.getElementById('susp-search-results');
+  if(!res)return;
+  const trimmed=(q||'').trim().toLowerCase();
+  if(!trimmed){res.style.display='none';res.innerHTML='';return;}
+  const matches=(state.staff||[]).filter(s=>
+    (s.billNo&&s.billNo.toLowerCase().includes(trimmed))||
+    (s.name&&s.name.toLowerCase().includes(trimmed))
+  ).slice(0,10);
+  if(!matches.length){
+    res.style.display='block';
+    res.innerHTML='<div style="padding:10px;color:#8b96a3;font-size:13px">কোনো স্টাফ পাওয়া যায়নি</div>';
+    return;
+  }
+  res.style.display='block';
+  res.innerHTML=matches.map(s=>`
+    <div onclick="fillSuspFromStaff('${s.id}')"
+      style="padding:9px 12px;cursor:pointer;border-bottom:1px solid #eef2f6;font-size:13px"
+      onmouseover="this.style.background='#f0f4ff'" onmouseout="this.style.background=''">
+      <b style="color:#003C73">${esc(s.billNo)||'—'}</b>
+      &nbsp;|&nbsp; ${esc(s.name)}
+      <span style="font-size:11px;color:#5b7086;margin-left:6px">${esc(s.post)} · ${esc(s.type)}</span>
+    </div>`).join('');
+}
+
+function fillSuspFromStaff(id){
+  const s=(state.staff||[]).find(x=>x.id===id);
+  if(!s)return;
+  // Copy all fields EXCEPT suspension-specific ones
+  const keep={suspDate:suspForm.suspDate||'',rejoinDate:suspForm.rejoinDate||''};
+  suspForm={
+    id:'',
+    billNo:s.billNo||'', name:s.name||'', post:s.post||'',
+    type:s.type||'Ministerial', pay:s.pay||'', grade:s.grade||'',
+    salary:s.salary||'', nid:s.nid||'', dob:s.dob||'',
+    retire:s.retire||'', phone:s.phone||'', bloodGroup:s.bloodGroup||'',
+    prlDate:s.prlDate||'', photo:s.photo||'',
+    joinDate:s.joinDate||'', joinPost:s.joinPost||'',
+    currentLoc:s.currentLoc||'',
+    currentOrderNo:s.currentOrderNo||'',
+    currentOrderDate:s.currentOrderDate||'',
+    suspDate:keep.suspDate, rejoinDate:keep.rejoinDate
+  };
+  // Hide results and clear search
+  const res=document.getElementById('susp-search-results');
+  if(res){res.style.display='none';}
+  const inp=document.getElementById('susp-search');
+  if(inp){inp.value=s.billNo?(s.billNo+' — '+s.name):(s.name);}
+  // Re-render the modal to show filled data
+  renderSuspModal();
+  showToast('✅ তথ্য লোড হয়েছে — বরখাস্তের তারিখ ও যোগদানের তারিখ পূরণ করুন');
+}
+
+function updateSuspPostSelect(type){
+  const sel=document.getElementById('susp-post-select');if(!sel)return;
+  const opts=postsFor(type)||[];const cur=suspForm.post;
+  sel.innerHTML='<option value="">নির্বাচন করুন</option>'+opts.map(p=>`<option value="${p}"${cur===p?' selected':''}>${p}</option>`).join('');
+  if(!opts.includes(cur)){suspForm.post='';sel.value='';}
+}
+function updateSuspDuration(){
+  const el=document.getElementById('susp-duration');
+  if(el)el.value=calcDuration(suspForm.suspDate,suspForm.rejoinDate);
+}
+function closeSuspModal(){document.getElementById('modal-container').innerHTML=''}
+function saveSusp(){
+  const f=suspForm;
+  if(!f.name.trim()){showToast('নাম লিখুন');return}
+  if(!f.billNo.trim()){showToast('বিল নম্বর লিখুন');return}
+  if(!f.suspDate){showToast('বরখাস্তের তারিখ দিন');return}
+  if(!state.suspended)state.suspended=[];
+  if(suspEditId){
+    const idx=state.suspended.findIndex(x=>x.id===suspEditId);
+    if(idx>=0)state.suspended[idx]={...f,id:suspEditId};
+  }else{state.suspended.push({...f,id:uid()});}
+  save();closeSuspModal();renderPage();
+  showToast(suspEditId?'তথ্য আপডেট হয়েছে':'নতুন এন্ট্রি যোগ হয়েছে');
+}
+function deleteSusp(id){
+  if(!confirm('এই এন্ট্রি মুছে ফেলবেন?'))return;
+  state.suspended=state.suspended.filter(x=>x.id!==id);save();renderPage();showToast('এন্ট্রি মুছে ফেলা হয়েছে');
+}
+
+function openSuspView(id){
+  const s=(state.suspended||[]).find(x=>x.id===id);if(!s)return;
+  const dur=calcDuration(s.suspDate,s.rejoinDate);
+  const html=`<div class="overlay" onclick="if(event.target===this)closeSuspView()">
+    <div class="modal" style="width:min(680px,100%);padding:0">
+      <div style="text-align:center;padding:18px 24px 10px;border-bottom:2px solid #7b1fa2">
+        <img src="${CPA_LOGO}" alt="CPA" onerror="this.style.display='none'"
+          style="width:70px;height:70px;border-radius:50%;object-fit:cover;border:2px solid #003C73;margin-bottom:8px;background:#f0f0f0">
+        <div style="font-size:17px;font-weight:700;color:#003C73;font-family:'Tiro Bangla',serif">চট্টগ্রাম বন্দর কর্তৃপক্ষ</div>
+        <div style="font-size:13px;color:#444;margin-top:3px">পরিচালক (ট্রাফিক) এর দপ্তর</div>
+        <div style="font-size:12px;color:#666;margin-top:2px">বন্দর ভবন, বন্দর, চট্টগ্রাম-৪১০০</div>
+        <div style="font-size:11px;color:#888;margin-top:2px">www.cpa.gov.bd</div>
+        <div style="margin-top:8px;display:inline-block;padding:4px 16px;background:#fce4ec;border-radius:999px;font-size:12px;font-weight:700;color:#7b1fa2">সাময়িক বরখাস্ত কর্মচারীর তথ্য</div>
+      </div>
+      <div style="padding:20px 24px">
+        <div class="sec-label" style="margin-top:0">ব্যক্তিগত তথ্য</div>
+        <div class="grid2" style="font-size:13px;gap:6px 12px">
+          ${[['বিল নম্বর',s.billNo],['নাম',s.name],['পদবী',s.post],['ধরন',s.type],
+            ['বেতন কোড',s.pay],['গ্রেড',s.grade],['মূল বেতন',s.salary],['NID',s.nid],
+            ['জন্ম তারিখ',fmtE(s.dob)],['অবসরের তারিখ',fmtE(s.retire)],
+            ['মোবাইল',s.phone],['ব্লাড গ্রুপ',s.bloodGroup],['PRL তারিখ',fmtE(s.prlDate)],
+            ['চাকুরীতে যোগদানের পদবী',s.joinPost],['চাকুরীতে যোগদানের তারিখ',fmtE(s.joinDate)]
+          ].map(([k,v])=>`<div><b style="color:#264257">${k}:</b> ${esc(v)||'—'}</div>`).join('')}
+        </div>
+        <div class="sec-label">বর্তমান কর্মস্থল</div>
+        <div class="grid3" style="font-size:13px">
+          <div><b>কর্মস্থল:</b> ${esc(s.currentLoc)||'—'}</div>
+          <div><b>দপ্তরাদেশ নং:</b> ${esc(s.currentOrderNo)||'—'}</div>
+          <div><b>তারিখ:</b> ${fmtE(s.currentOrderDate)}</div>
+        </div>
+        <div class="sec-label" style="background:rgba(123,31,162,.08);border-color:#7b1fa2">⛔ বরখাস্তের তথ্য</div>
+        <table class="tbl" style="border:1px solid #ce93d8">
+          <thead><tr style="background:#7b1fa2;color:#fff">
+            <th style="padding:8px">বরখাস্তের তারিখ</th>
+            <th style="padding:8px">সময়কাল</th>
+            <th style="padding:8px">যোগদানের তারিখ</th>
+          </tr></thead>
+          <tbody><tr>
+            <td style="padding:8px;text-align:center">${fmtE(s.suspDate)}</td>
+            <td style="padding:8px;text-align:center;font-weight:700;color:${s.rejoinDate?'#2e7d32':'#b71c1c'}">${dur}</td>
+            <td style="padding:8px;text-align:center">${s.rejoinDate?fmtE(s.rejoinDate):'<span style="color:#b71c1c;font-weight:700">চলমান</span>'}</td>
+          </tr></tbody>
+        </table>
+        <div style="margin-top:18px;padding:10px 14px;background:#f8f9fa;border-radius:8px;border:1px solid #e0e0e0;font-size:12px;color:#555;font-style:italic;text-align:center">
+          This is a system-generated record. No separate signature is required.
+        </div>
+        <div class="no-print" style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px">
+          <button class="btn btn-white" onclick="closeSuspView()">বন্ধ করুন</button>
+          <button class="btn btn-navy" onclick="printRecord()">🖨️ প্রিন্ট করুন</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById('modal-container').innerHTML=html;
+}
+function closeSuspView(){document.getElementById('modal-container').innerHTML=''}
+
+
+// ==========================================
+// পদবী ব্যবস্থাপনা PAGE
+// ==========================================
+function renderPostsPage(){
+  const opts=getPostOpts();
+  const types=['Ministerial','Outdoor'];
+  const isAdmin=state.role==='admin';
+
+  return `<div class="card" style="padding:18px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+      <h3 style="margin:0;color:${NAVY}">পদবী ব্যবস্থাপনা</h3>
+      ${isAdmin?`<div style="font-size:12px;color:#5b7086">পদবী যোগ বা মুছে দিলে সব ড্রপডাউনে আপডেট হবে</div>`:''}
+    </div>
+    <div class="grid2">
+      ${types.map(type=>`
+      <div class="card" style="padding:14px;border-top:4px solid ${type==='Ministerial'?NAVY:GOLD}">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <h4 style="margin:0;color:${NAVY};font-size:14px">${type==='Ministerial'?'মিনিস্ট্রিয়াল':'আউটডোর'} পদবী</h4>
+          <span class="badge" style="background:#e3f2fd;color:#1565c0">${(opts[type]||[]).length}টি</span>
+        </div>
+        <div id="post-list-${type}" style="margin-bottom:12px">
+          ${(opts[type]||[]).map((p,i)=>`
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:rgba(255,255,255,.6);border-radius:7px;margin-bottom:5px;border:1px solid rgba(0,60,115,.1)">
+            <span style="font-size:13px;font-weight:600;color:#1a2e42">${esc(p)}</span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:11px;color:#5b7086">${state.staff.filter(s=>s.post===p).length} জন কর্মরত</span>
+              ${isAdmin?`<button class="btn btn-red btn-sm" style="padding:3px 8px;font-size:11px" onclick="deletePost('${type}','${esc(p)}')">✕</button>`:''}
+            </div>
+          </div>`).join('')}
+          ${(opts[type]||[]).length===0?`<div style="color:#8b96a3;font-size:13px;padding:8px">কোনো পদবী নেই</div>`:''}
+        </div>
+        ${isAdmin?`
+        <div style="display:flex;gap:6px">
+          <input class="inp" id="new-post-${type}" placeholder="নতুন পদবীর নাম" style="font-size:13px" onkeydown="if(event.key==='Enter')addPost('${type}')">
+          <button class="btn btn-navy btn-sm" onclick="addPost('${type}')" style="white-space:nowrap">＋ যোগ করুন</button>
+        </div>`:''}
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function addPost(type){
+  const inp=document.getElementById('new-post-'+type);
+  if(!inp)return;
+  const val=inp.value.trim();
+  if(!val){showToast('পদবীর নাম লিখুন');return;}
+  const opts=getPostOpts();
+  if(!opts[type])opts[type]=[];
+  if(opts[type].includes(val)){showToast('এই পদবী ইতিমধ্যে আছে');return;}
+  opts[type].push(val);
+  state.postOptions={...opts};
+  save();inp.value='';renderPage();
+  showToast(`✅ "${val}" পদবী যোগ হয়েছে`);
+}
+
+function deletePost(type,post){
+  const inUse=state.staff.filter(s=>s.post===post).length;
+  if(inUse>0){
+    if(!confirm(`"${post}" পদবীতে ${inUse} জন কর্মচারী আছেন। তবুও মুছবেন?`))return;
+  } else {
+    if(!confirm(`"${post}" পদবী মুছে ফেলবেন?`))return;
+  }
+  const opts=getPostOpts();
+  opts[type]=(opts[type]||[]).filter(p=>p!==post);
+  state.postOptions={...opts};
+  save();renderPage();
+  showToast(`"${post}" মুছে ফেলা হয়েছে`);
+}
+
+// ==========================================
+// LOCATIONS
+// ==========================================
+function renderLocations(){
+  const groups=OFFICE_LIST.map(o=>[o,state.locations.filter(l=>l.office===o)]);
+  const others=state.locations.filter(l=>!OFFICE_LIST.includes(l.office));
+  if(others.length)groups.push(['অন্যান্য',others]);
+
+  const addBtn=state.role==='admin'?`<button class="btn btn-gold" onclick="openAddLoc('')">＋ নতুন অবস্থান</button>`:'';
+
+  return `<div class="card" style="padding:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px">
+      <h3 style="margin:0;color:${NAVY};font-size:15px">কর্মস্থল / জনবলের তালিকা</h3>
+      ${addBtn}
+    </div>
+    ${state.locations.length===0?`<div style="text-align:center;color:#8b96a3;padding:24px;font-size:13px">এখনো কোনো অবস্থান যোগ করা হয়নি। ＋ নতুন অবস্থান বাটনে ক্লিক করুন।</div>`:''}
+    ${groups.map(([office,items])=>items.length===0?'':`
+      <div style="margin-top:18px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid rgba(0,42,79,.18);padding-bottom:6px;flex-wrap:wrap;gap:8px">
+          <h4 style="margin:0;color:${NAVY_DEEP};font-size:14px;font-weight:800">${esc(office)}</h4>
+          ${state.role==='admin'?`<button class="btn btn-white btn-sm" onclick="openAddLoc('${esc(office)}')">＋ শাখা যোগ করুন</button>`:''}
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+          ${items.map(l=>{
+            const diff=(l.work||0)-(l.san||0);
+            const badge=diff>0?['অতিরিক্ত','#fff3e0','#e65100']:diff<0?['খালি','#ffebee','#c62828']:['সমান','#e8f5e9','#2e7d32'];
+            return `<div class="card" style="padding:14px">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+                <h3 style="margin:0 0 8px;font-size:14px;color:${NAVY};font-family:'Hind Siliguri',sans-serif;font-weight:700">${esc(l.branch||l.name)}</h3>
+                ${state.role==='admin'?`<div style="display:flex;gap:4px;flex-shrink:0">
+                  <button class="btn btn-white btn-sm" onclick="openEditLoc('${esc(l.name)}')">Edit</button>
+                  <button class="btn btn-red btn-sm" onclick="deleteLoc('${esc(l.name)}')">মুছুন</button>
+                </div>`:''}
+              </div>
+              <span class="badge" style="background:${badge[1]};color:${badge[2]}">${badge[0]}</span>
+              <!-- Summary row -->
+              <div style="display:flex;justify-content:space-between;text-align:center;margin-top:10px;margin-bottom:8px">
+                <div><b style="font-size:18px">${l.san||0}</b><div style="font-size:10px;color:#8b96a3">মঞ্জুরীকৃত</div></div>
+                <div><b style="font-size:18px">${l.work||0}</b><div style="font-size:10px;color:#8b96a3">কর্মরত</div></div>
+                <div><b style="font-size:18px;color:${diff===0?GREEN:RED}">${Math.abs(diff)}</b><div style="font-size:10px;color:#8b96a3">${diff>0?'অতিরিক্ত':diff<0?'খালি':'ব্যবধান'}</div></div>
+              </div>
+              <!-- Post-wise breakdown -->
+              ${(()=>{
+                const postRows=allPosts().map(p=>{
+                  const san=(l.postSan&&l.postSan[p])||0;
+                  const work=state.staff.filter(s=>s.currentLoc===l.name&&s.post===p).length;
+                  if(san===0&&work===0)return '';
+                  const d=work-san;
+                  return `<tr>
+                    <td style="padding:3px 6px;font-size:11px">${esc(p)}</td>
+                    <td style="padding:3px 6px;text-align:center;font-size:11px">${san}</td>
+                    <td style="padding:3px 6px;text-align:center;font-size:11px;font-weight:600;color:${d>0?RED:d<0?'#1565c0':GREEN}">${work}</td>
+                    <td style="padding:3px 6px;text-align:center;font-size:11px;color:${d===0?GREEN:RED}">${d>0?'+'+d:d<0?d:'-'}</td>
+                  </tr>`;
+                }).filter(Boolean).join('');
+                return postRows?`
+                <div style="margin-top:4px;border-top:1px dashed #c0cfe0;padding-top:6px">
+                  <table style="width:100%;border-collapse:collapse">
+                    <thead><tr style="background:#f2f6fa">
+                      <th style="padding:3px 6px;font-size:10px;text-align:left;color:#264257">পদবী</th>
+                      <th style="padding:3px 6px;font-size:10px;color:#264257">মঞ্জু.</th>
+                      <th style="padding:3px 6px;font-size:10px;color:#264257">কর্মরত</th>
+                      <th style="padding:3px 6px;font-size:10px;color:#264257">ব্যবধান</th>
+                    </tr></thead>
+                    <tbody>${postRows}</tbody>
+                  </table>
+                </div>`:'<div style="font-size:11px;color:#aab;margin-top:6px;text-align:center">পদবীওয়ারী তথ্য এখনো সেট হয়নি — Edit করুন</div>';
+              })()}
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`).join('')}
+  </div>`;
+}
+
+// ===== LOCATION MODAL =====
+let locForm={origName:'',name:'',office:'',branch:'',san:'',work:'',postSan:{}};let locEditing=false;
+
+function openAddLoc(office){
+  locEditing=false;locForm={origName:'',name:'',office:office||'',branch:'',san:'',work:'',postSan:{}};renderLocModal();
+}
+function openEditLoc(name){
+  const l=state.locations.find(x=>x.name===name);if(!l)return;
+  locEditing=true;locForm={origName:l.name,name:l.name,office:l.office||'',branch:l.branch||'',san:String(l.san||''),work:String(l.work||''),postSan:l.postSan?JSON.parse(JSON.stringify(l.postSan)):{}};
+  renderLocModal();
+}
+function renderLocModal(){
+  const f=locForm;
+  const offOpts=OFFICE_LIST.map(o=>`<option value="${esc(o)}"${f.office===o?' selected':''}>${esc(o)}</option>`).join('');
+  const html=`<div class="overlay" onclick="if(event.target===this)closeLocModal()">
+    <div class="modal" style="width:min(440px,100%);padding:22px">
+      <h3 style="margin-top:0;color:${NAVY}">${locEditing?'অবস্থান সম্পাদনা':'নতুন অবস্থান যোগ করুন'}</h3>
+      <label class="lbl">দপ্তর (Office)</label>
+      <select class="inp" id="lf-office" onchange="locForm.office=this.value">
+        <option value="">নির্বাচন করুন</option>${offOpts}
+        <option value="__custom__"${!OFFICE_LIST.includes(f.office)&&f.office?'selected':''}>＋ নতুন দপ্তর যোগ করুন</option>
+      </select>
+      <div id="custom-office-wrap" style="${!OFFICE_LIST.includes(f.office)&&f.office?'':'display:none'}">
+        <label class="lbl">নতুন দপ্তরের নাম</label>
+        <input class="inp" id="lf-custom-office" value="${esc(!OFFICE_LIST.includes(f.office)?f.office:'')}" oninput="locForm.office=this.value" placeholder="দপ্তরের নাম লিখুন">
+      </div>
+      <label class="lbl">শাখা/অবস্থানের নাম <span style="color:red">*</span></label>
+      <input class="inp" id="lf-branch" value="${esc(f.branch)}" oninput="locForm.branch=this.value" placeholder="শাখার নাম">
+      <label class="lbl">মঞ্জুরীকৃত পদ (Sanctioned)</label>
+      <input class="inp" type="number" min="0" id="lf-san" value="${esc(f.san)}" oninput="locForm.san=this.value" placeholder="0">
+      <label class="lbl">কর্মরত সংখ্যা (Working)</label>
+      <input class="inp" type="number" min="0" id="lf-work" value="${esc(f.work)}" oninput="locForm.work=this.value" placeholder="0">
+      <div style="font-size:11px;color:#5b7086;margin-top:4px;line-height:1.6">নোট: কর্মরত সংখ্যা স্বয়ংক্রিয়ভাবে স্টাফ ডেটা থেকে গণনা হয়।</div>
+      <!-- Post-wise sanctioned -->
+      <div style="margin-top:14px;border-top:1px solid #e0e8f0;padding-top:12px">
+        <div style="font-size:12px;font-weight:700;color:${NAVY};margin-bottom:8px">📋 পদবীওয়ারী মঞ্জুরীকৃত পদ</div>
+        <div style="font-size:11px;color:#5b7086;margin-bottom:10px">প্রতিটি পদবীর জন্য মঞ্জুরীকৃত পদের সংখ্যা দিন (০ রাখলে সেই পদবী ব্রেকডাউনে দেখাবে না)</div>
+        <div id="post-san-inputs" style="display:grid;grid-template-columns:1fr 1fr;gap:6px 10px">
+          ${allPosts().map(p=>{
+            const val=(locForm.postSan&&locForm.postSan[p])||0;
+            return `<div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.6);padding:6px 8px;border-radius:7px;border:1px solid rgba(0,60,115,.1)">
+              <span style="font-size:12px;flex:1">${esc(p)}</span>
+              <input type="number" min="0" value="${val}"
+                style="width:55px;padding:4px 6px;border-radius:6px;border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.8);font-size:12px;text-align:center"
+                oninput="if(!locForm.postSan)locForm.postSan={};locForm.postSan['${esc(p)}']=Number(this.value)||0;updateLocSanTotal()">
+            </div>`;
+          }).join('')}
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:#264257">মোট মঞ্জুরীকৃত: <b id="loc-san-total">${locForm.san||0}</b></div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+        <button class="btn btn-white" onclick="closeLocModal()">বাতিল</button>
+        <button class="btn btn-navy" onclick="saveLoc()">সংরক্ষণ করুন</button>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById('modal-container').innerHTML=html;
+  document.getElementById('lf-office').addEventListener('change',function(){
+    const v=this.value;
+    document.getElementById('custom-office-wrap').style.display=v==='__custom__'?'':'none';
+    if(v!=='__custom__')locForm.office=v;else locForm.office='';
+  });
+}
+function updateLocSanTotal(){
+  const postSan=locForm.postSan||{};
+  const total=Object.values(postSan).reduce((a,v)=>a+(Number(v)||0),0);
+  const el=document.getElementById('loc-san-total');
+  if(el)el.textContent=total;
+  locForm.san=String(total);
+}
+function closeLocModal(){document.getElementById('modal-container').innerHTML=''}
+function saveLoc(){
+  const branch=locForm.branch.trim();
+  if(!branch){showToast('শাখার নাম লিখুন');return}
+  const office=locForm.office.trim();
+  const name=`${branch}${office?` (${office})`:''}`; // auto-name
+  const locName=locEditing&&locForm.origName?locForm.origName:name;
+  if(!locEditing&&state.locations.some(l=>l.name===locName)){showToast('এই নামে ইতিমধ্যে একটি অবস্থান আছে।');return}
+  const postSan=locForm.postSan||{};
+  const sanTotal=Object.values(postSan).reduce((a,v)=>a+(Number(v)||0),0)||Number(locForm.san)||0;
+  const entry={name:locName,office,branch,san:sanTotal,work:Number(locForm.work)||0,postSan};
+  if(locEditing){
+    const idx=state.locations.findIndex(l=>l.name===locForm.origName);
+    if(idx>=0){state.locations[idx]=entry;if(locForm.origName!==locName)state.staff.forEach(s=>{if(s.currentLoc===locForm.origName)s.currentLoc=locName})}
+  }else{state.locations.push(entry)}
+  save();closeLocModal();renderPage();showToast(locEditing?'অবস্থান আপডেট হয়েছে':'নতুন অবস্থান যোগ হয়েছে');
+}
+function deleteLoc(name){
+  if(!confirm(`"${name}" মুছে ফেলবেন?`))return;
+  state.locations=state.locations.filter(l=>l.name!==name);save();renderPage();showToast('অবস্থান মুছে ফেলা হয়েছে');
+}
+
+// ==========================================
+// REPORTS
+// ==========================================
+function renderReports(){
+  return `<div class="card" style="padding:18px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <h3 style="margin:0;color:${NAVY}">রিপোর্ট ও Excel Export</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-gold" onclick="openExcelExport()">📊 ফিল্টার করে Excel Export</button>
+        <button class="btn btn-white" onclick="exportCSV()">⬇ সব স্টাফ Export</button>
+      </div>
+    </div>
+    <ul style="font-size:13px;line-height:2;margin-top:14px;padding-left:18px">
+      <li>কর্মস্থলভিত্তিক জনবল বিবরণী — Locations পেজে দেখুন</li>
+      <li>২ বছর পূর্ণ হওয়া স্টাফ তালিকা — Staff Register-এ Status ফিল্টার করুন</li>
+      <li>খালি পদ ও অতিরিক্ত জনবল রিপোর্ট — Dashboard-এ দেখুন</li>
+      <li>মিনিস্ট্রিয়াল বনাম আউটডোর তুলনা — Dashboard stats</li>
+      <li>সম্পূর্ণ ডেটা এক্সপোর্ট — উপরের বাটনে ক্লিক করুন</li>
+    </ul>
+  </div>`;
+}
+
+function exportToExcel(staffList, filename){
+  if(!window.XLSX){showToast('Excel লাইব্রেরি লোড হয়নি, একটু পরে চেষ্টা করুন');return;}
+  if(!staffList||staffList.length===0){showToast('কোনো তথ্য পাওয়া যায়নি');return;}
+  const headers=['বিল নম্বর','নাম','পদবী','ধরন','বেতন কোড','গ্রেড','মূল বেতন','NID','জন্ম তারিখ','অবসরের তারিখ','মোবাইল','ব্লাড গ্রুপ','PRL তারিখ','বর্তমান কর্মস্থল','দপ্তরাদেশ নং','যোগদানের তারিখ','পূর্ববর্তী কর্মস্থল ১','দপ্তরাদেশ নং ১','তারিখ ১','পূর্ববর্তী কর্মস্থল ২','দপ্তরাদেশ নং ২','তারিখ ২','পূর্ববর্তী কর্মস্থল ৩','দপ্তরাদেশ নং ৩','তারিখ ৩','পদোন্নতি ১ পদবী','পদোন্নতি ১ দপ্তরাদেশ','পদোন্নতি ১ তারিখ','পদোন্নতি ২ পদবী','পদোন্নতি ২ দপ্তরাদেশ','পদোন্নতি ২ তারিখ','পদোন্নতি ৩ পদবী','পদোন্নতি ৩ দপ্তরাদেশ','পদোন্নতি ৩ তারিখ','পদোন্নতি ৪ পদবী','পদোন্নতি ৪ দপ্তরাদেশ','পদোন্নতি ৪ তারিখ','বাসার টাইপ','বাসার তথ্য','বাসা বরাদ্দ সংক্রান্ত দপ্তরাদেশ নং','বাসা বরাদ্দ তারিখ','চাকুরীতে যোগদানের পদবী','চাকুরীতে যোগদানের তারিখ'];
+  const rows=staffList.map(s=>{
+    const pw=s.prevWp||[{},{},{}];
+    const pr=s.promotions||[{},{},{},{}];
+    return [s.billNo,s.name,s.post,s.type,s.pay,s.grade,s.salary,s.nid,s.dob,s.retire,s.phone,s.bloodGroup||'',s.prlDate||'',s.currentLoc,s.currentOrderNo,s.currentOrderDate,(pw[0]||{}).loc||'',(pw[0]||{}).orderNo||'',(pw[0]||{}).orderDate||'',(pw[1]||{}).loc||'',(pw[1]||{}).orderNo||'',(pw[1]||{}).orderDate||'',(pw[2]||{}).loc||'',(pw[2]||{}).orderNo||'',(pw[2]||{}).orderDate||'',(pr[0]||{}).post||'',(pr[0]||{}).orderNo||'',(pr[0]||{}).date||'',(pr[1]||{}).post||'',(pr[1]||{}).orderNo||'',(pr[1]||{}).date||'',(pr[2]||{}).post||'',(pr[2]||{}).orderNo||'',(pr[2]||{}).date||'',(pr[3]||{}).post||'',(pr[3]||{}).orderNo||'',(pr[3]||{}).date||'',
+      s.houseType||'',s.houseInfo||'',s.houseOrderNo||'',s.houseOrderDate||'',s.joinPost||'',s.joinDate||''];
+  });
+  const wsData=[headers,...rows];
+  const ws=XLSX.utils.aoa_to_sheet(wsData);
+  // Column widths
+  ws['!cols']=[{wch:12},{wch:20},{wch:18},{wch:14},{wch:12},{wch:8},{wch:12},{wch:18},{wch:12},{wch:12},{wch:14},{wch:10},{wch:12},{wch:28},{wch:14},{wch:12}];
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Staff Data');
+  XLSX.writeFile(wb,filename||'CPA_Staff.xlsx');
+  showToast('Excel ফাইল ডাউনলোড হচ্ছে...');
+}
+
+// ==========================================
+// EXCEL IMPORT (admin / office editor)
+// ==========================================
+const _BN='০১২৩৪৫৬৭৮৯';
+function _bn2en(s){return String(s).replace(/[০-৯]/g,d=>_BN.indexOf(d))}
+function _nk(s){return _bn2en(String(s==null?'':s)).normalize('NFC').replace(/\u09AF\u09BC/g,'\u09DF').replace(/\u09A1\u09BC/g,'\u09DC').replace(/\u09A2\u09BC/g,'\u09DD').replace(/[\u200b-\u200d\ufeff\u00a0]/g,' ').replace(/\s+/g,' ').trim().toLowerCase()}
+const IMP_COLS=(function(){
+  const bn=['১','২','৩','৪'];
+  const c=[
+    ['billNo','বিল নম্বর','num',['bill no','bill number','billno','বিল নং']],
+    ['name','নাম','text',['name']],
+    ['post','পদবী','text',['post','designation']],
+    ['type','ধরন','type',['type','category']],
+    ['pay','বেতন কোড','num',['pay code','paycode']],
+    ['grade','গ্রেড','num',['grade']],
+    ['salary','মূল বেতন','money',['salary','basic salary','basic']],
+    ['nid','NID','num',['nid','এনআইডি','national id']],
+    ['dob','জন্ম তারিখ','date',['dob','date of birth','birth date']],
+    ['retire','অবসরের তারিখ','date',['retire','retirement','retirement date']],
+    ['phone','মোবাইল','phone',['mobile','phone','mobile no','মোবাইল নম্বর']],
+    ['bloodGroup','ব্লাড গ্রুপ','blood',['blood group','blood']],
+    ['prlDate','PRL তারিখ','date',['prl','prl date']],
+    ['currentLoc','বর্তমান কর্মস্থল','text',['current location','current workplace','workplace','কর্মস্থল']],
+    ['currentOrderNo','দপ্তরাদেশ নং','num',['order no','current order no']],
+    ['currentOrderDate','যোগদানের তারিখ','date',['join date','current order date']]
+  ];
+  for(let i=0;i<3;i++){
+    c.push(['prevWp.'+i+'.loc','পূর্ববর্তী কর্মস্থল '+bn[i],'text',[]]);
+    c.push(['prevWp.'+i+'.orderNo','দপ্তরাদেশ নং '+bn[i],'num',[]]);
+    c.push(['prevWp.'+i+'.orderDate','তারিখ '+bn[i],'date',[]]);
+  }
+  for(let i=0;i<4;i++){
+    c.push(['promotions.'+i+'.post','পদোন্নতি '+bn[i]+' পদবী','text',[]]);
+    c.push(['promotions.'+i+'.orderNo','পদোন্নতি '+bn[i]+' দপ্তরাদেশ','num',[]]);
+    c.push(['promotions.'+i+'.date','পদোন্নতি '+bn[i]+' তারিখ','date',[]]);
+  }
+  c.push(['houseType','বাসার টাইপ','text',[]]);
+  c.push(['houseInfo','বাসার তথ্য','text',[]]);
+  c.push(['houseOrderNo','বাসা বরাদ্দ সংক্রান্ত দপ্তরাদেশ নং','num',[]]);
+  c.push(['houseOrderDate','বাসা বরাদ্দ তারিখ','date',[]]);
+  c.push(['joinPost','চাকুরীতে যোগদানের পদবী','text',[]]);
+  c.push(['joinDate','চাকুরীতে যোগদানের তারিখ','date',[]]);
+  return c.map(x=>({path:x[0],label:x[1],kind:x[2],alias:x[3]}));
+})();
+const IMP_LOOKUP=(function(){
+  const m=new Map();
+  IMP_COLS.forEach(c=>{m.set(_nk(c.label),c);c.alias.forEach(a=>m.set(_nk(a),c))});
+  return m;
+})();
+let imp=null;
+
+function _parseDate(v){
+  if(v===''||v==null)return {v:''};
+  if(typeof v==='number'){
+    if(v>=1&&v<80000)return {v:new Date(Math.round((Math.floor(v)-25569)*86400000)).toISOString().slice(0,10)};
+    return {bad:true};
+  }
+  const s=_bn2en(String(v)).trim();
+  if(!s)return {v:''};
+  let m=s.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/),y,mo,d;
+  if(m){y=+m[1];mo=+m[2];d=+m[3]}
+  else{
+    m=s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})$/);
+    if(!m)return {bad:true};
+    d=+m[1];mo=+m[2];y=+m[3];
+  }
+  const dt=new Date(Date.UTC(y,mo-1,d));
+  if(dt.getUTCFullYear()!==y||dt.getUTCMonth()!==mo-1||dt.getUTCDate()!==d)return {bad:true};
+  return {v:dt.toISOString().slice(0,10)};
+}
+function _setPath(o,path,val){
+  const p=path.split('.');
+  if(p.length===1){o[p[0]]=val;return}
+  if(!Array.isArray(o[p[0]]))o[p[0]]=[];
+  const i=+p[1];
+  while(o[p[0]].length<=i)o[p[0]].push({});
+  if(!o[p[0]][i]||typeof o[p[0]][i]!=='object')o[p[0]][i]={};
+  o[p[0]][i][p[2]]=val;
+}
+function _impPosts(){
+  const po=state.postOptions||POST_OPTIONS;
+  return {M:po.Ministerial||[],O:po.Outdoor||[]};
+}
+function _impParseRows(aoa){
+  // find header row (within first 8 rows)
+  let hi=-1,colMap=null;
+  for(let r=0;r<Math.min(aoa.length,8);r++){
+    const m={};let hit=0;
+    (aoa[r]||[]).forEach((h,ci)=>{const c=IMP_LOOKUP.get(_nk(h));if(c&&m[ci]===undefined){m[ci]=c;hit++}});
+    const keys=Object.values(m).map(c=>c.path);
+    if(keys.includes('billNo')&&keys.includes('name')){hi=r;colMap=m;break}
+  }
+  if(hi<0)return {fatal:'হেডার সারি পাওয়া যায়নি। "বিল নম্বর" ও "নাম" কলামসহ টেমপ্লেট ব্যবহার করুন।'};
+  const have=new Set(Object.values(colMap).map(c=>c.path));
+  const missing=['currentLoc','post'].filter(k=>!have.has(k)).map(k=>IMP_COLS.find(c=>c.path===k).label);
+  if(missing.length)return {fatal:'প্রয়োজনীয় কলাম নেই: '+missing.join(', ')};
+  const unknown=[];
+  (aoa[hi]||[]).forEach((h,ci)=>{if(String(h||'').trim()&&!colMap[ci])unknown.push(String(h).trim())});
+  const locMap=new Map();state.locations.forEach(l=>locMap.set(_nk(l.name),l.name));
+  const existing=new Map();state.staff.forEach(s=>existing.set(_nk(s.billNo),s));
+  const PO=_impPosts();const allPosts=new Set([...PO.M,...PO.O].map(_nk));
+  const seen=new Map();const rows=[];
+  for(let r=hi+1;r<aoa.length;r++){
+    const arr=aoa[r]||[];
+    if(!arr.some(x=>String(x==null?'':x).trim()!==''))continue;
+    const row={n:r+1,vals:{},errs:[],warns:[],kind:'new'};
+    for(const ci in colMap){
+      const c=colMap[ci];let raw=arr[ci];
+      if(raw==null||String(raw).trim()==='')continue;
+      if(c.kind==='date'){
+        const p=_parseDate(raw);
+        if(p.bad)row.errs.push(c.label+': তারিখ বোঝা যায়নি ("'+String(raw)+'")');
+        else if(p.v)row.vals[c.path]=p.v;
+        continue;
+      }
+      let s=typeof raw==='number'?String(raw):String(raw).replace(/\u00a0/g,' ').trim();
+      if(c.kind==='num'||c.kind==='money'){
+        s=_bn2en(s).trim();
+        if(c.kind==='money')s=s.replace(/,/g,'');
+        if(c.path==='nid'&&typeof raw==='number'&&Math.abs(raw)>=1e15)row.warns.push('NID সংখ্যা হিসেবে সংরক্ষিত, শেষের অঙ্ক ঠিক নাও থাকতে পারে (Excel-এ কলামটি Text করুন)');
+      }else if(c.kind==='phone'){
+        s=_bn2en(s).replace(/[\s-]/g,'');
+        if(s.startsWith('+880'))s='0'+s.slice(4);else if(s.startsWith('880')&&s.length>=13)s='0'+s.slice(3);
+        if(/^1\d{9}$/.test(s))s='0'+s;
+      }else if(c.kind==='blood'){
+        s=_bn2en(s).toUpperCase().replace(/\s/g,'');
+        if(!['A+','A-','B+','B-','AB+','AB-','O+','O-'].includes(s)){row.warns.push('ব্লাড গ্রুপ বোঝা যায়নি ("'+s+'"), বাদ দেওয়া হয়েছে');continue}
+      }else if(c.kind==='type'){
+        const k=_nk(s);
+        if(k==='ministerial'||k==='মিনিস্ট্রিয়াল')s='Ministerial';
+        else if(k==='outdoor'||k==='আউটডোর')s='Outdoor';
+        else{row.errs.push('ধরন: "'+s+'" — Ministerial বা Outdoor লিখুন');continue}
+      }
+      if(s!=='')row.vals[c.path]=s;
+    }
+    const v=row.vals;
+    if(String(v.billNo||'').includes('নমুনা'))continue;
+    if(!v.billNo)row.errs.push('বিল নম্বর নেই');
+    if(!v.name)row.errs.push('নাম নেই');
+    if(!v.post)row.errs.push('পদবী নেই');
+    if(!v.currentLoc)row.errs.push('বর্তমান কর্মস্থল নেই');
+    else{
+      const canon=locMap.get(_nk(v.currentLoc));
+      if(!canon)row.errs.push('কর্মস্থল তালিকায় নেই: "'+v.currentLoc+'" (আগে কর্মস্থল যোগ করুন বা নাম মিলিয়ে নিন)');
+      else v.currentLoc=canon;
+    }
+    if(v.post){
+      if(!allPosts.has(_nk(v.post)))row.warns.push('পদবী "'+v.post+'" পদবী তালিকায় নেই');
+      if(!v.type)v.type=PO.O.map(_nk).includes(_nk(v.post))?'Outdoor':'Ministerial';
+    }
+    if(v.currentLoc&&!row.errs.length&&state.role==='office_editor'){
+      const off=staffOffice({currentLoc:v.currentLoc});
+      if(off!==state.userOffice)row.errs.push('এই কর্মস্থল আপনার দপ্তরের নয়');
+    }
+    if(v.billNo){
+      const k=_nk(v.billNo);
+      if(seen.has(k))row.errs.push('ফাইলে একই বিল নম্বর আগে সারি '+seen.get(k)+'-এ আছে');
+      else seen.set(k,row.n);
+      const ex=existing.get(k);
+      if(ex&&!row.errs.length){
+        if(!canEditStaff(ex))row.errs.push('এই বিল নম্বরের স্টাফ আপনার অধিকারভুক্ত নয়');
+        else{row.kind='dup';row.exId=ex.id}
+      }
+    }
+    if(row.errs.length)row.kind='error';
+    rows.push(row);
+  }
+  return {rows,unknown,total:rows.length};
+}
+function openImportPicker(){
+  if(!canAddStaff()){showToast('আপনার Login-এ ইমপোর্টের অনুমতি নেই');return}
+  if(!window.XLSX){showToast('Excel লাইব্রেরি লোড হয়নি, একটু পরে চেষ্টা করুন');return}
+  let inp=document.getElementById('imp-file');
+  if(!inp){inp=document.createElement('input');inp.type='file';inp.id='imp-file';inp.accept='.xlsx,.xls,.csv';inp.style.display='none';inp.onchange=()=>handleImportFile(inp);document.body.appendChild(inp)}
+  inp.value='';inp.click();
+}
+function handleImportFile(inp){
+  const f=inp.files&&inp.files[0];
+  if(!f)return;
+  const rd=new FileReader();
+  rd.onload=e=>{
+    try{
+      const wb=XLSX.read(new Uint8Array(e.target.result),{type:'array'});
+      const sn=wb.SheetNames.includes('ডেটা')?'ডেটা':wb.SheetNames[0];
+      const aoa=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,raw:true,defval:''});
+      const res=_impParseRows(aoa);
+      imp={fileName:f.name,sheet:sn,mode:'skip',...res};
+      renderImportDialog();
+    }catch(err){console.error(err);showToast('ফাইল পড়া যায়নি: '+err.message,5000)}
+  };
+  rd.readAsArrayBuffer(f);
+}
+function _impCounts(){
+  const c={newN:0,dup:0,err:0,warn:0};
+  imp.rows.forEach(r=>{if(r.kind==='new')c.newN++;else if(r.kind==='dup')c.dup++;else c.err++;if(r.warns.length&&r.kind!=='error')c.warn++});
+  c.willAdd=c.newN;c.willUpd=imp.mode==='update'?c.dup:0;
+  return c;
+}
+function closeImportDialog(){const el=document.getElementById('imp-overlay');if(el)el.remove();imp=null}
+function impSetMode(m){if(imp){imp.mode=m;renderImportDialog()}}
+function renderImportDialog(){
+  let el=document.getElementById('imp-overlay');
+  if(!el){el=document.createElement('div');el.id='imp-overlay';el.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:12px';document.body.appendChild(el)}
+  const chip=(t,bg,fg)=>`<span style="background:${bg};color:${fg};padding:5px 10px;border-radius:14px;font-size:12px;font-weight:700">${t}</span>`;
+  let body='';
+  if(imp.fatal){
+    body=`<div style="padding:14px;background:#fff5f5;color:#c0392b;border-radius:9px;font-size:13px">${esc(imp.fatal)}</div>
+      <div style="margin-top:14px;text-align:right"><button class="btn btn-white" onclick="closeImportDialog()">বন্ধ করুন</button></div>`;
+  }else{
+    const c=_impCounts();const total=c.willAdd+c.willUpd;
+    const errRows=imp.rows.filter(r=>r.kind==='error');
+    body=`<div style="font-size:12px;color:#555;margin-bottom:10px">ফাইল: <b>${esc(imp.fileName)}</b> (শিট: ${esc(imp.sheet)})</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
+        ${chip('মোট সারি '+imp.total,'#eef3f8',NAVY)}
+        ${chip('নতুন '+c.newN,'#e8f5e9','#2e7d32')}
+        ${c.dup?chip('আগে থেকে আছে '+c.dup,'#fff8e1','#8a6d00'):''}
+        ${c.err?chip('ত্রুটি '+c.err,'#fff5f5','#c0392b'):''}
+        ${c.warn?chip('সতর্কতা '+c.warn,'#fff8e1','#8a6d00'):''}
+      </div>`;
+    if(c.dup)body+=`<div style="padding:10px 12px;background:#fffbea;border-radius:9px;font-size:13px;margin-bottom:12px">
+        <div style="font-weight:700;margin-bottom:6px">যে ${c.dup} জনের বিল নম্বর আগে থেকেই আছে, তাদের ক্ষেত্রে:</div>
+        <label style="display:block;margin-bottom:4px;cursor:pointer"><input type="radio" name="imp-mode" ${imp.mode==='skip'?'checked':''} onchange="impSetMode('skip')"> বাদ দিন (বিদ্যমান তথ্য অপরিবর্তিত থাকবে)</label>
+        <label style="display:block;cursor:pointer"><input type="radio" name="imp-mode" ${imp.mode==='update'?'checked':''} onchange="impSetMode('update')"> হালনাগাদ করুন (Excel-এর ফাঁকা ঘর বিদ্যমান তথ্য মুছবে না)</label>
+      </div>`;
+    if(imp.unknown&&imp.unknown.length)body+=`<div style="font-size:12px;color:#8a6d00;margin-bottom:10px">অচেনা কলাম (উপেক্ষা করা হবে): ${imp.unknown.map(esc).join(', ')}</div>`;
+    if(errRows.length){
+      body+=`<div style="font-weight:700;font-size:13px;color:#c0392b;margin:8px 0 6px">ত্রুটিযুক্ত সারি (এগুলো ইমপোর্ট হবে না)</div>
+        <div style="max-height:200px;overflow:auto;border:1px solid #f1d4d0;border-radius:8px"><table style="width:100%;border-collapse:collapse;font-size:12px">
+        <tr style="background:#fff5f5"><th style="padding:6px;text-align:left">সারি</th><th style="padding:6px;text-align:left">বিল নং</th><th style="padding:6px;text-align:left">কারণ</th></tr>
+        ${errRows.slice(0,100).map(r=>`<tr style="border-top:1px solid #f1d4d0"><td style="padding:6px">${r.n}</td><td style="padding:6px">${esc(r.vals.billNo||'')}</td><td style="padding:6px">${r.errs.map(esc).join('; ')}</td></tr>`).join('')}
+        </table></div>${errRows.length>100?`<div style="font-size:11px;color:#777;margin-top:4px">প্রথম ১০০টি দেখানো হলো। সব ত্রুটি Excel-এ ডাউনলোড করুন।</div>`:''}
+        <button class="btn btn-white btn-sm" style="margin-top:8px" onclick="downloadImportErrors()">⬇ ত্রুটির তালিকা Excel-এ</button>`;
+    }
+    body+=`<div style="margin-top:14px;padding-top:12px;border-top:1px solid #eee;display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;align-items:center">
+        <span style="font-size:12px;color:#555;flex:1;min-width:160px">ত্রুটিযুক্ত সারি বাদ দিয়ে বাকিগুলো ইমপোর্ট হবে।</span>
+        <button class="btn btn-white" onclick="closeImportDialog()">বাতিল</button>
+        <button class="btn btn-gold" id="imp-run" ${total?'':'disabled'} onclick="runImport()">ইমপোর্ট করুন (${total} জন)</button>
+      </div>`;
+  }
+  el.innerHTML=`<div style="background:#fff;border-radius:14px;max-width:760px;width:100%;max-height:90vh;overflow:auto;padding:18px 20px;box-shadow:0 10px 40px rgba(0,0,0,.3)">
+    <h3 style="margin:0 0 12px;color:${NAVY}">📥 Excel থেকে স্টাফ ইমপোর্ট</h3>${body}</div>`;
+}
+function downloadImportErrors(){
+  if(!imp||!window.XLSX)return;
+  const rows=[['সারি নং','বিল নম্বর','নাম','কারণ'],...imp.rows.filter(r=>r.kind==='error').map(r=>[r.n,r.vals.billNo||'',r.vals.name||'',r.errs.join('; ')])];
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(rows),'ত্রুটি');
+  XLSX.writeFile(wb,'import_errors.xlsx');
+}
+async function runImport(){
+  if(!imp||imp.fatal)return;
+  const btn=document.getElementById('imp-run');
+  if(btn){btn.disabled=true;btn.textContent='সংরক্ষণ হচ্ছে… অপেক্ষা করুন'}
+  let added=0,updated=0;
+  const bnBlank=()=>({loc:'',orderNo:'',orderDate:''});
+  imp.rows.forEach(r=>{
+    if(r.kind==='new'){
+      const s=blank();
+      s.id=uid();
+      Object.keys(r.vals).forEach(k=>_setPath(s,k,r.vals[k]));
+      s.office=staffOffice(s)||state.userOffice||'';
+      state.staff.push(s);added++;
+    }else if(r.kind==='dup'&&imp.mode==='update'){
+      const s=state.staff.find(x=>x.id===r.exId);
+      if(!s)return;
+      Object.keys(r.vals).forEach(k=>_setPath(s,k,r.vals[k]));
+      s.office=staffOffice(s)||s.office||state.userOffice||'';
+      updated++;
+    }
+  });
+  logActivity('staff_import',null,'Excel ইমপোর্ট: নতুন '+added+', হালনাগাদ '+updated);
+  const ok=await save();
+  closeImportDialog();
+  renderPage();
+  showToast(ok===false?'⚠ তথ্য ক্লাউডে সংরক্ষণ হয়নি, উপরের লাল বার্তা দেখুন':('✅ ইমপোর্ট সম্পন্ন: নতুন '+added+(updated?', হালনাগাদ '+updated:'')),6000);
+}
+function downloadImportTemplate(){
+  if(!window.XLSX){showToast('Excel লাইব্রেরি লোড হয়নি, একটু পরে চেষ্টা করুন');return}
+  const headers=IMP_COLS.map(c=>c.label);
+  const sample=IMP_COLS.map(c=>c.path==='billNo'?'(নমুনা — এই সারি মুছে দিন)':'');
+  const wb=XLSX.utils.book_new();
+  const ws=XLSX.utils.aoa_to_sheet([headers,sample]);
+  ws['!cols']=headers.map(h=>({wch:Math.max(12,h.length+2)}));
+  XLSX.utils.book_append_sheet(wb,ws,'ডেটা');
+  const help=[
+    ['নির্দেশনা'],
+    ['১. "ডেটা" শিটের ২য় সারি নমুনা, সেটি মুছে আপনার স্টাফদের তথ্য দিন (১ম সারির হেডার বদলাবেন না)।'],
+    ['২. অবশ্যই লাগবে: বিল নম্বর, নাম, পদবী, বর্তমান কর্মস্থল। বাকি সব ঘর ঐচ্ছিক।'],
+    ['৩. বর্তমান কর্মস্থল ও পদবী "কর্মস্থল তালিকা" ও "পদবী তালিকা" শিটের নামের সাথে হুবহু মিলতে হবে (কপি করে বসান)।'],
+    ['৪. তারিখ লিখুন 2024-03-25 বা 25/03/2024 (দিন/মাস/বছর) ফরম্যাটে, অথবা Excel-এর Date ঘর।'],
+    ['৫. ধরন: Ministerial বা Outdoor। ফাঁকা রাখলে পদবী দেখে নির্ধারিত হবে।'],
+    ['৬. মোবাইল ও NID কলাম Text ফরম্যাটে রাখুন, নইলে শুরুর ০ বা শেষের অঙ্ক হারাতে পারে।'],
+    ['৭. একই বিল নম্বর আগে থেকে সিস্টেমে থাকলে ইমপোর্টের সময় "বাদ দিন" বা "হালনাগাদ" বেছে নেওয়া যাবে।']
+  ];
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(help),'নির্দেশনা');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['কর্মস্থল (হুবহু কপি করুন)','দপ্তর'],...state.locations.map(l=>[l.name,l.office||''])]),'কর্মস্থল তালিকা');
+  const PO=_impPosts();
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['পদবী','ধরন'],...PO.M.map(p=>[p,'Ministerial']),...PO.O.map(p=>[p,'Outdoor'])]),'পদবী তালিকা');
+  XLSX.writeFile(wb,'CPA_Staff_Import_Template.xlsx');
+  showToast('টেমপ্লেট ডাউনলোড হচ্ছে...');
+}
+
+function exportCSV(){exportToExcel(state.staff,'CPA_Staff_Export.xlsx');}
+
+function openExcelExport(){
+  const allPosts=[...new Set([...allPosts(),...state.staff.map(s=>s.post)].filter(Boolean))].sort();
+  const allLocs=[...new Set(state.staff.map(s=>s.currentLoc).filter(Boolean))].sort();
+  const html2=`<div class="overlay" onclick="if(event.target===this)document.getElementById('modal-container').innerHTML=''">
+    <div class="modal" style="width:min(480px,100%);padding:24px">
+      <h3 style="margin-top:0;color:#003C73">📊 Excel Export</h3>
+      <label class="lbl">ফিল্টার করুন (ঐচ্ছিক)</label>
+      <div class="grid2" style="margin-bottom:12px">
+        <div>
+          <label class="lbl" style="margin-top:6px">ধরন</label>
+          <select class="inp" id="ex-type">
+            <option value="">সব (মিনিস্ট্রিয়াল + আউটডোর)</option>
+            <option value="Ministerial">Ministerial</option>
+            <option value="Outdoor">Outdoor</option>
+          </select>
+        </div>
+        <div>
+          <label class="lbl" style="margin-top:6px">পদবী</label>
+          <select class="inp" id="ex-post">
+            <option value="">সব পদবী</option>
+            ${allPosts.map(p=>`<option value="${esc(p)}">${esc(p)}</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label class="lbl" style="margin-top:6px">কর্মস্থল</label>
+          <select class="inp" id="ex-loc">
+            <option value="">সব কর্মস্থল</option>
+            ${allLocs.map(l=>`<option value="${esc(l)}">${esc(l)}</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label class="lbl" style="margin-top:6px">গ্রেড</label>
+          <input class="inp" id="ex-grade" placeholder="যেমন: ১৫">
+        </div>
+      </div>
+      <div id="ex-count" style="font-size:13px;color:#1565c0;margin-bottom:12px">সব স্টাফ: ${state.staff.length} জন</div>
+      <div style="display:flex;justify-content:flex-end;gap:8px">
+        <button class="btn btn-white" onclick="document.getElementById('modal-container').innerHTML=''">বাতিল</button>
+        <button class="btn btn-gold" onclick="runExcelExport()">⬇ Excel ডাউনলোড করুন</button>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById('modal-container').innerHTML=html2;
+  // Live count update
+  ['ex-type','ex-post','ex-loc','ex-grade'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.addEventListener('change',updateExCount);
+  });
+  const gr=document.getElementById('ex-grade');
+  if(gr)gr.addEventListener('input',updateExCount);
+}
+function updateExCount(){
+  const t=document.getElementById('ex-type').value;
+  const p=document.getElementById('ex-post').value;
+  const l=document.getElementById('ex-loc').value;
+  const g=document.getElementById('ex-grade').value.trim();
+  let f=state.staff;
+  if(t)f=f.filter(s=>s.type===t);
+  if(p)f=f.filter(s=>s.post===p);
+  if(l)f=f.filter(s=>s.currentLoc===l);
+  if(g)f=f.filter(s=>String(s.grade||'').includes(g));
+  const c=document.getElementById('ex-count');
+  if(c)c.textContent='নির্বাচিত: '+f.length+' জন';
+}
+function runExcelExport(){
+  const t=document.getElementById('ex-type').value;
+  const p=document.getElementById('ex-post').value;
+  const l=document.getElementById('ex-loc').value;
+  const g=document.getElementById('ex-grade').value.trim();
+  let f=state.staff;
+  if(t)f=f.filter(s=>s.type===t);
+  if(p)f=f.filter(s=>s.post===p);
+  if(l)f=f.filter(s=>s.currentLoc===l);
+  if(g)f=f.filter(s=>String(s.grade||'').includes(g));
+  const parts=[];
+  if(t)parts.push(t);if(p)parts.push(p);if(l)parts.push('loc');if(g)parts.push('grade'+g);
+  const fname='CPA_Staff'+(parts.length?'_'+parts.join('_'):'')+'.xlsx';
+  exportToExcel(f,fname);
+  document.getElementById('modal-container').innerHTML='';
+}
+
+// ==========================================
+// BOOT
+// ==========================================
+document.addEventListener('DOMContentLoaded',()=>{
+  // Set embedded logo everywhere + browser favicon
+  ['logo-login','logo-app'].forEach(id=>{const el=document.getElementById(id);if(el)el.src=CPA_LOGO;});
+  // Close susp search dropdown on outside click
+  document.addEventListener('click',e=>{
+    const res=document.getElementById('susp-search-results');
+    const inp=document.getElementById('susp-search');
+    if(res&&inp&&!inp.contains(e.target)&&!res.contains(e.target)){res.style.display='none';}
+  });
+  const favLink=document.querySelector("link[rel*='icon']")||document.createElement('link');
+  favLink.rel='shortcut icon';favLink.type='image/png';favLink.href=CPA_LOGO;
+  document.head.appendChild(favLink);
+  // Keyboard shortcut: Enter in login
+  document.getElementById('l-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+});
+</script>
+</body>
+</html>
